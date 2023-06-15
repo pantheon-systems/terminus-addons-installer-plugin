@@ -2,11 +2,14 @@ name: Test
 on:
   push:
 
+env:
+  TERMINUS_TOKEN: ${{ secrets.TERMINUS_TOKEN }}
+
 jobs:
   unit:
     runs-on: ubuntu-latest
     container:
-      image: quay.io/pantheon-public/terminus-plugin-test:latest
+      image: quay.io/pantheon-public/terminus-plugin-test:4.x-php8.0
       options: --user root
     name: Unit Tests
     steps:
