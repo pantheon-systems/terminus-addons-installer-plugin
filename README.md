@@ -1,6 +1,6 @@
 # Terminus Scaffold Extension Plugin
 
-[![CircleCI](https://circleci.com/gh/pantheon-systems/terminus-scaffold-extension-plugin.svg?style=shield)](https://circleci.com/gh/pantheon-systems/terminus-scaffold-extension-plugin)
+[![Build Status](https://github.com/pantheon-systems/terminus-scaffold-extension-plugin/actions/workflows/test.yml/badge.svg)](https://github.com/pantheon-systems/terminus-scaffold-extension-plugin/actions/workflows/test.yml)
 [![Actively Maintained](https://img.shields.io/badge/Pantheon-Actively_Maintained-yellow?logo=pantheon&color=FFDC28)](https://pantheon.io/docs/oss-support-levels#actively-maintained-support)
 
 [![Terminus v2.x - v3.x Compatible](https://img.shields.io/badge/terminus-2.x%20--%203.x-green.svg)](https://github.com/pantheon-systems/terminus-scaffold-extension-plugin/tree/2.x)
