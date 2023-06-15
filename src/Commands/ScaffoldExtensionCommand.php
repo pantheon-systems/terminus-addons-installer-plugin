@@ -46,6 +46,22 @@ class ScaffoldExtensionCommand extends TerminusCommand {
 		$this->log()->notice(sprintf( 'Attempting to run the %1$s job on %2$s.%3$s...', $job_id, $site_id, $env ));
 	}
 
+	/**
+	 * List the available scaffold_extension UJR jobs.
+	 *
+	 * @command scaffold-extension:list
+	 * @aliases se:list
+	 * @aliases scaffold:list
+	 *
+	 * @param string $site_env
+	 */
+	public function listJobs( string $site_env ) {
+		$site = $this->decypherSiteInfo( $site_env );
+		$site_id = $site['id'];
+		$env = $site['env'];
+
+		$this->log()->notice(sprintf( 'Attempting to list jobs on %1$s.%2$s...', $site_id, $env ));
+	}
 
 	/**
 	 * Given a $site_env which might be in site_id.dev or just site_id format, return an array with the site_id and env.
