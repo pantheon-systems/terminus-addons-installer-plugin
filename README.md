@@ -16,15 +16,15 @@ These commands require no configuration
 
 ## Commands
 
-### `scaffold-extension` (alias `se`)
+### `scaffold-extension` (alias `scaffold`)
 
 This is the base command. This command without any sub-commands will simply print the usage information and documentation.
 
-### `scaffold-extension:list` (alias `se:list`)
+### `scaffold-extension:list` (alias `scaffold:list`)
 
 Lists available `scaffold_extension` jobs.
 
-### `scaffold-extension:run <job>` (alias `se:run`)
+### `scaffold-extension:run <job>` (alias `scaffold:run`)
 
 Runs the specified `scaffold_extension` job.
 
