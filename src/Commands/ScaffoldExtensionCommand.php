@@ -19,7 +19,6 @@ class ScaffoldExtensionCommand extends TerminusCommand
      *
      *
      * @command scaffold-extension
-     * @aliases se
      * @aliases scaffold
      */
     public function scaffoldExtension()
@@ -31,7 +30,6 @@ class ScaffoldExtensionCommand extends TerminusCommand
      * Run the scaffold_extension UJR job.
      *
      * @command scaffold-extension:run
-     * @aliases se:run
      * @aliases scaffold:run
      *
      * @param string $site_env
@@ -55,7 +53,6 @@ class ScaffoldExtensionCommand extends TerminusCommand
      * List the available scaffold_extension UJR jobs.
      *
      * @command scaffold-extension:list
-     * @aliases se:list
      * @aliases scaffold:list
      *
      * @param string $site_env
