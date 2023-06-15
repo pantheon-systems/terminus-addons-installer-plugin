@@ -25,3 +25,36 @@ jobs:
         run: composer test
       - name: Validate Terminus exists
         run: terminus --version
+  terminus-3:
+    needs: unit
+    runs-on: ubuntu-latest
+    container:
+      image: quay.io/pantheon-public/terminus-plugin-test:3.x
+      options: --user root
+    name: Terminus 3 Functional Tests
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up environment
+        run: ./.circleci/set-up-globals.sh
+      - name: Validate Terminus exists
+        run: terminus --version
+      - name: Install plugin
+        run: terminus self:plugin:install ${GITHUB_WORKSPACE}
+      - name: Functional Tests
+        run: composer functional
+  code-style:
+    runs-on: ubuntu-latest
+    container:
+      image: quay.io/pantheon-public/terminus-plugin-test:4.x-php8.2
+      options: --user root
+    name: Code Style
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up environment
+        run: ./.circleci/set-up-globals.sh
+      - name: Install Dependencies
+        run: composer install
+      - name: Code Style
+        run: composer cs
