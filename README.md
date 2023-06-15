@@ -59,7 +59,7 @@ This example project includes four testing targets:
 * `composer unit`: Run unit tests with phpunit
 * `composer functional`: Run functional test with bats
 
-To run all tests together, use `composer test`.
+To run all tests together, use `composer test:all`.
 
 Note that prior to running the tests, you should first run:
 * `composer install`
