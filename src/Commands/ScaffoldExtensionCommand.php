@@ -31,6 +31,17 @@ class ScaffoldExtensionCommand extends TerminusCommand {
 	 * @aliases scaffold:run
 	 */
 	public function runExtension( string $site_env, $job_id = '' ) {
+
+	/**
+	 * Given a $site_env which might be in site_id.dev or just site_id format, return an array with the site_id and env.
+	 *
+	 * The default environment is dev.
+	 *
+	 * @param string $site_env
+	 *
+	 * @return array
+	 */
+	private function decypherSiteInfo( string $site_env ) : array {
 		$env = 'dev';
 		$site_id = $site_env;
 
@@ -39,16 +50,16 @@ class ScaffoldExtensionCommand extends TerminusCommand {
 		 * Otherwise, we default to dev.
 		 */
 		if ( strpos( $site_env, '.' ) !== false ) {
-			$site = explode( '.', $site_env );
-			$env = $site[1];
-			$site_id = $site[0];
+			$site_props = explode( '.', $site_env );
+			$site_id = $site_props[0];
+			$env = $site_props[1];
 		}
 
-		if ( empty( $job_id ) ) {
-			$this->log()->error( 'Please provide a job ID.' );
-			return;
-		}
+		$site = [
+			'id' => $site_id,
+			'env' => $env
+		];
 
-		$this->log()->notice(sprintf( 'Attempting to run the %1$s job on %2$s.%3$s...', $job_id, $site_id, $env ));
+		return $site;
 	}
 }
