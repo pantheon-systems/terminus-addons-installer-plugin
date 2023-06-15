@@ -23,7 +23,15 @@ class ScaffoldExtensionCommand extends TerminusCommand
      */
     public function scaffoldExtension()
     {
-        $this->log()->notice("Attempting to run scaffold_extension job...");
+    /**
+     * Run the scaffold_extension UJR job.
+     *
+     * @command scaffold-extension:help
+     * @aliases scaffold:help
+     */
+    public function scaffoldExtensionHelp()
+    {
+        return $this->scaffoldExtension();
     }
 
     /**
