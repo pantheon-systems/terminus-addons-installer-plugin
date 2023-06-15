@@ -23,7 +23,10 @@
         ],
         "test": [
             "@lint",
-            "@unit",
+            "@unit"
+        ],
+        "test:all": [
+            "@test",
             "@functional",
             "@cs"
         ]
