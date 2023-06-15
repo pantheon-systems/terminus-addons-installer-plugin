@@ -30,9 +30,9 @@ echo "Test site is $TERMINUS_SITE"
 echo "Logging in with a machine token:"
 terminus auth:login -n --machine-token="$TERMINUS_TOKEN"
 terminus whoami
-touch $HOME/.ssh/config
+cat > $HOME/.ssh/config
 echo "StrictHostKeyChecking no" >> "$HOME/.ssh/config"
-git config --global user.email "$GIT_EMAIL"
-git config --global user.name "Circle CI"
+git config --global user.email "bot@pantheon.io"
+git config --global user.name "Pantheon Bot"
 # Ignore file permissions.
 git config --global core.fileMode false
