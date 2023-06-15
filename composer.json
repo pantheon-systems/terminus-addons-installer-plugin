@@ -4,7 +4,8 @@
     "type": "terminus-plugin",
     "license": "MIT",
     "autoload": {
-        "psr-4": { "Pantheon\\TerminusScaffoldExtension\\": "src" }
+        "psr-4": { "Pantheon\\TerminusScaffoldExtension\\": "src" },
+        "files": [ "src/Helpers/UtilityFunctions.php" ]
     },
     "require-dev": {
         "phpunit/phpunit": "^9",
