@@ -18,3 +18,5 @@ jobs:
         run: composer lint
       - name: Unit Tests
         run: composer test
+      - name: Validate Terminus exists
+        run: terminus --version
