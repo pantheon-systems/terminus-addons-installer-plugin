@@ -1,5 +1,5 @@
 {
-    "name": "pantheon-systems/scaffold-extension",
+    "name": "pantheon-systems/terminus-scaffold-extension-plugin",
     "description": "An example Terminus command",
     "type": "terminus-plugin",
     "license": "MIT",
