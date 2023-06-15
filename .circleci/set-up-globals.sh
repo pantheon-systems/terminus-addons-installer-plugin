@@ -19,6 +19,14 @@ if [ ${CIRCLECI+x} ]; then
     echo 'export TERMINUS_HIDE_UPDATE_MESSAGE=1'
   ) >> $BASH_ENV
   source $BASH_ENV
+
+  # TODO: come back to this. In the meantime, let's disable unless we're in Circle.
+  touch $HOME/.ssh/config
+  echo "StrictHostKeyChecking no" >> "$HOME/.ssh/config"
+  git config --global user.email "$GIT_EMAIL"
+  git config --global user.name "Circle CI"
+  # Ignore file permissions.
+  git config --global core.fileMode false
 fi
 
 set -ex
@@ -30,13 +38,3 @@ echo "Test site is $TERMINUS_SITE"
 echo "Logging in with a machine token:"
 terminus auth:login -n --machine-token="$TERMINUS_TOKEN"
 terminus whoami
-
-# TODO: come back to this. In the meantime, let's disable unless we're in Circle.
-if [ ${CIRCLECI+x} ]; then
-  touch $HOME/.ssh/config
-  echo "StrictHostKeyChecking no" >> "$HOME/.ssh/config"
-  git config --global user.email "$GIT_EMAIL"
-  git config --global user.name "Circle CI"
-  # Ignore file permissions.
-  git config --global core.fileMode false
-fi
