@@ -29,7 +29,7 @@ jobs:
     needs: unit
     runs-on: ubuntu-latest
     container:
-      image: quay.io/pantheon-public/terminus-plugin-test:3.x
+      image: quay.io/pantheon-public/terminus-plugin-test:4.x-php8.0
       options: --user root
     name: Terminus 3 Functional Tests
     steps:
