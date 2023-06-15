@@ -15,7 +15,8 @@ class ScaffoldExtensionCommand extends TerminusCommand
     public const DEFAULT_COLOR = "\e[0m";
 
     /**
-     * Run the scaffold_extension UJR job.
+     * Run a scaffold_extension UJR job.
+     *
      *
      * @command scaffold-extension
      * @aliases se
