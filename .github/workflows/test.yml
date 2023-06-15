@@ -4,7 +4,8 @@ on:
 
 jobs:
   unit:
-    runs-on: quay.io/pantheon-public/terminus-plugin-test:3.x
+    runs-on: ubuntu-latest
+    container: quay.io/pantheon-public/terminus-plugin-test:3.x
     name: Unit Tests
     steps:
       - name: Checkout
