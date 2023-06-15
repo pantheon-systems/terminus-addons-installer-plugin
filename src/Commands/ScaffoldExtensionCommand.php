@@ -23,6 +23,9 @@ class ScaffoldExtensionCommand extends TerminusCommand
      */
     public function scaffoldExtension()
     {
+        return $this->usage();
+    }
+
     /**
      * Run the scaffold_extension UJR job.
      *
