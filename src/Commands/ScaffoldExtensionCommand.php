@@ -105,4 +105,32 @@ class ScaffoldExtensionCommand extends TerminusCommand
 
         return $site;
     }
+
+    /**
+     * Returns the full usage and information for the scaffold-extension command.
+     *
+     * @return string
+     */
+    private function usage() : string {
+        $bold = "\e[1m";
+
+        $output = $bold . "terminus scaffold-extension  (aliases: scaffold, scaffold-extension:help, scaffold:help)\n" . self::DEFAULT_COLOR;
+        $output .= self::UPDATE_VARS_COLOR . "Description:\n" . self::DEFAULT_COLOR;
+        $output .= "\tDisplays this help message.\n";
+        $output .= self::UPDATE_VARS_COLOR . "Usage:\n" . self::DEFAULT_COLOR;
+        $output .= "\tterminus scaffold-extension\n\n";
+        $output .= $bold . "terminus scaffold-extension:list (aliases: scaffold:list)\n" . self::DEFAULT_COLOR;
+        $output .= self::UPDATE_VARS_COLOR . "Description:\n" . self::DEFAULT_COLOR;
+        $output .= "\tLists available scaffold_extension UJR jobs.\n";
+        $output .= self::UPDATE_VARS_COLOR . "Usage:\n" . self::DEFAULT_COLOR;
+        $output .= "\tterminus scaffold-extension:list <site_id>.<env>\n\n";
+        $output .= $bold . "terminus scaffold-extension:run (aliases: scaffold:run)\n" . self::DEFAULT_COLOR;
+        $output .= self::UPDATE_VARS_COLOR . "Description:\n" . self::DEFAULT_COLOR;
+        $output .= "\tRuns the specified scaffold_extension UJR job.\n";
+        $output .= self::UPDATE_VARS_COLOR . "Usage:\n" . self::DEFAULT_COLOR;
+        $output .= "\tterminus scaffold-extension:run <site_id>.<env> <job> [--with-db]\n\n";
+        $output .= "For more information, run terminus help scaffold-extension:<command>.";
+
+        return $output;
+    }
 }
