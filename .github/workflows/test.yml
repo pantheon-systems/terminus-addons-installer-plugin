@@ -5,8 +5,9 @@ on:
 jobs:
   unit:
     runs-on: ubuntu-latest
-    container: quay.io/pantheon-public/terminus-plugin-test:latest
-    options: --user root
+    container:
+      image: quay.io/pantheon-public/terminus-plugin-test:latest
+      options: --user root
     name: Unit Tests
     steps:
       - name: Checkout
