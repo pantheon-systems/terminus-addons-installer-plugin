@@ -4,7 +4,7 @@ on:
 
 jobs:
   unit:
-    runs-on: pantheonpublic/terminus-plugin-test:3.x
+    runs-on: quay.io/pantheon-public/terminus-plugin-test:3.x
     name: Unit Tests
     steps:
       - name: Checkout
