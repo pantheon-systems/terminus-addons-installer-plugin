@@ -11,6 +11,8 @@ use Pantheon\Terminus\Commands\TerminusCommand;
 
 class ScaffoldExtensionCommand extends TerminusCommand
 {
+    public const UPDATE_VARS_COLOR = "\e[38;5;3m";
+    public const DEFAULT_COLOR = "\e[0m";
 
     /**
      * Run the scaffold_extension UJR job.
