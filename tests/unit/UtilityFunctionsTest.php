@@ -29,4 +29,15 @@ class UtilityFunctionsTest extends TestCase
             ['terminus scaffold-extension:run (aliases: scaffold:run)'],
         ];
     }
+
+    /**
+     * Test the decypherSiteInfo function.
+     */
+    public function testDecypherSiteInfo()
+    {
+        $result = Helpers::decypherSiteInfo('site_id.dev');
+        $this->assertIsArray($result);
+        $this->assertEquals('site_id', $result['id']);
+        $this->assertEquals('dev', $result['env']);
+    }
 }
