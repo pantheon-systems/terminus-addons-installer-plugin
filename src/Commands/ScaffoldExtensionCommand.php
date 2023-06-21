@@ -42,20 +42,27 @@ class ScaffoldExtensionCommand extends TerminusCommand
      * @aliases scaffold:run
      *
      * @param string $site_env
-     * @param string $job_id
+     * @param string $job_name
      */
-    public function runExtension(string $site_env, $job_id = '')
+    public function runExtension(string $site_env = '', $job_name = '')
     {
+        if (empty($site_env)) {
+            $this->log()->error('Please provide site information.');
+            Helpers\UtilityFunctions::usage();
+            return;
+        }
+
         $site = Helpers\UtilityFunctions::decypherSiteInfo($site_env);
         $site_id = $site['id'];
         $env = $site['env'];
 
-        if (empty($job_id)) {
+
+        if (empty($job_name)) {
             $this->log()->error('Please provide a job ID.');
             return;
         }
 
-        $this->log()->notice(sprintf('Attempting to run the %1$s job on %2$s.%3$s...', $job_id, $site_id, $env));
+        $this->log()->notice(sprintf('Attempting to run the %1$s job on %2$s.%3$s...', $job_name, $site_id, $env));
     }
 
     /**
