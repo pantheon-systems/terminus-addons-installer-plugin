@@ -3,9 +3,9 @@
  * Scaffold Extension Utility Functions
  */
 
-namespace Pantheon\TerminusScaffoldExtension\Utils;
+namespace Pantheon\TerminusScaffoldExtension\Helpers;
 
-class Helpers {
+class UtilityFunctions {
     public const UPDATE_VARS_COLOR = "\e[38;5;3m";
     public const DEFAULT_COLOR = "\e[0m";
 
