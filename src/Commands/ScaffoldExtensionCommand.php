@@ -8,7 +8,7 @@
 namespace Pantheon\TerminusScaffoldExtension\Commands;
 
 use Pantheon\Terminus\Commands\TerminusCommand;
-use Pantheon\TerminusScaffoldExtension\Utils;
+use Pantheon\TerminusScaffoldExtension\Helpers;
 
 class ScaffoldExtensionCommand extends TerminusCommand
 {
@@ -21,7 +21,7 @@ class ScaffoldExtensionCommand extends TerminusCommand
      */
     public function scaffoldExtension()
     {
-        return Utils\Helpers::usage();
+        return Helpers\UtilityFunctions::usage();
     }
 
     /**
@@ -46,7 +46,7 @@ class ScaffoldExtensionCommand extends TerminusCommand
      */
     public function runExtension(string $site_env, $job_id = '')
     {
-        $site = Utils\Helpers::decypherSiteInfo($site_env);
+        $site = Helpers\UtilityFunctions::decypherSiteInfo($site_env);
         $site_id = $site['id'];
         $env = $site['env'];
 
@@ -68,7 +68,7 @@ class ScaffoldExtensionCommand extends TerminusCommand
      */
     public function listJobs(string $site_env)
     {
-        $site = Utils\Helpers::decypherSiteInfo($site_env);
+        $site = Helpers\UtilityFunctions::decypherSiteInfo($site_env);
         $site_id = $site['id'];
         $env = $site['env'];
 
