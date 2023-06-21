@@ -12,7 +12,7 @@
 
 @test "get help on scaffold-extension command" {
   run terminus help scaffold-extension
-  [[ $output == *"Run a scaffold extension UJR job"* ]]
+  [[ $output == *"Run a scaffold_extension UJR job"* ]]
   [ "$status" -eq 0 ]
 }
 
