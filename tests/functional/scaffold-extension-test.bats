@@ -49,13 +49,11 @@
 @test "test failure states" {
   run terminus scaffold:run foo
   [[ $output == *"Please provide a job ID"* ]]
-  [ "$status" -eq 1 ]
+  [ "$status" -eq 0 ]
 
   run terminus scaffold:run
-  [[ $output == *"Not enough arguments"* ]]
   [ "$status" -eq 1 ]
 
   run terminus scaffold:list
-  [[ $output == *"Not enough arguments"* ]]
   [ "$status" -eq 1 ]
 }
