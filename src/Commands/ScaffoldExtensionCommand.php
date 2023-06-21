@@ -70,15 +70,10 @@ class ScaffoldExtensionCommand extends TerminusCommand
      *
      * @command scaffold-extension:list
      * @aliases scaffold:list
-     *
-     * @param string $site_env
      */
-    public function listJobs(string $site_env)
+    public function listJobs()
     {
-        $site = Helpers\UtilityFunctions::decypherSiteInfo($site_env);
-        $site_id = $site['id'];
-        $env = $site['env'];
-
-        $this->log()->notice(sprintf('Attempting to list jobs on %1$s.%2$s...', $site_id, $env));
+        $this->log()->notice('Listing available jobs...');
+        return Helpers\UtilityFunctions::availableJobs();
     }
 }
