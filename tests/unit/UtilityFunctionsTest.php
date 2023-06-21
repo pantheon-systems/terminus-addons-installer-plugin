@@ -40,4 +40,14 @@ class UtilityFunctionsTest extends TestCase
         $this->assertEquals('site_id', $result['id']);
         $this->assertEquals('dev', $result['env']);
     }
+
+    /**
+     * Test the availableJobs function.
+     */
+    public function testAvailableJobs()
+    {
+        $result = UtilityFunctions::availableJobs();
+        $this->assertIsArray($result);
+        $this->assertArrayHasKey('install-ocp', $result);
+    }
 }

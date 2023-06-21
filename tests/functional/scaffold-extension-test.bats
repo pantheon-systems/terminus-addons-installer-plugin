@@ -12,19 +12,19 @@
 
 @test "run scaffold-extension:list command" {
   run terminus scaffold-extension:list foo
-  [[ $output == *"Attempting to list jobs on"* ]]
+  [[ $output == *"Listing available jobs..."* ]]
   [ "$status" -eq 0 ]
 
   run terminus scaffold:list foo
-  [[ $output == *"Attempting to list jobs on"* ]]
+  [[ $output == *"Listing available jobs..."* ]]
   [ "$status" -eq 0 ]
 
   run terminus scaffold-extension:list foo.dev
-  [[ $output == *"Attempting to list jobs on"* ]]
+  [[ $output == *"Listing available jobs..."* ]]
   [ "$status" -eq 0 ]
 
   run terminus scaffold:list foo.dev
-  [[ $output == *"Attempting to list jobs on"* ]]
+  [[ $output == *"Listing available jobs..."* ]]
   [ "$status" -eq 0 ]
 }
 
