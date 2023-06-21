@@ -1,6 +1,6 @@
 <?php
 
-namespace Pantheon\TerminusScaffoldExtension\Utils;
+namespace Pantheon\TerminusScaffoldExtension\Helpers;
 
 use PHPUnit\Framework\TestCase;
 
@@ -13,7 +13,7 @@ class UtilityFunctionsTest extends TestCase
      */
     public function testBaseCommand($expected)
     {
-        $this->assertTrue(str_contains(Helpers::usage(), $expected));
+        $this->assertTrue(str_contains(UtilityFunctions::usage(), $expected));
     }
 
     /**
@@ -35,7 +35,7 @@ class UtilityFunctionsTest extends TestCase
      */
     public function testDecypherSiteInfo()
     {
-        $result = Helpers::decypherSiteInfo('site_id.dev');
+        $result = UtilityFunctions::decypherSiteInfo('site_id.dev');
         $this->assertIsArray($result);
         $this->assertEquals('site_id', $result['id']);
         $this->assertEquals('dev', $result['env']);
