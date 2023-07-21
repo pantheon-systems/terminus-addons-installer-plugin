@@ -32,6 +32,8 @@ jobs:
       image: quay.io/pantheon-public/terminus-plugin-test:4.x-php8.0
       options: --user root
     name: Terminus 3 Functional Tests
+    env:
+      TERMINUS_SITE: terminus-addons-installer-plugin
     steps:
       - name: Checkout
         uses: actions/checkout@v2
