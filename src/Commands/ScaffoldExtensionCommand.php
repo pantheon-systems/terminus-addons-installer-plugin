@@ -78,7 +78,7 @@ class ScaffoldExtensionCommand extends TerminusCommand
 
         $this->log()->notice(sprintf('Attempting to run the %1$s job on %2$s.%3$s...', $job_name, $site_id, $env));
 
-        return $this->getWorkflows()->create('scaffold_extension', compact('site_id', 'env', 'job_name'));
+        return $this->env->getWorkflows()->create('scaffold_extension', compact('site_id', 'env', 'job_name'));
     }
 
     /**
