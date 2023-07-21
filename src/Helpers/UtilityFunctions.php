@@ -82,4 +82,17 @@ class UtilityFunctions
             'install_ocp' => 'install_ocp: Installs Object Cache Pro',
         ];
     }
+
+    /**
+     * Returns true if the specified job exists.
+     *
+     * @param string $job_name
+     *
+     * @return bool
+     */
+    public static function jobExists(string $job_name) : bool
+    {
+        $jobs = self::availableJobs();
+        return array_key_exists($job_name, $jobs);
+    }
 }
