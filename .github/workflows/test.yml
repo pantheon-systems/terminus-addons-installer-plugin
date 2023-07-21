@@ -45,6 +45,8 @@ jobs:
         run: terminus self:plugin:install ${GITHUB_WORKSPACE}
       - name: Functional Tests
         run: composer functional
+      - name: Cleanup
+        run: ./.bin/cleanup.sh
   code-style:
     runs-on: ubuntu-latest
     container:
