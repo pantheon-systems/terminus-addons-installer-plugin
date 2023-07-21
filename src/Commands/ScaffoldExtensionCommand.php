@@ -63,7 +63,7 @@ class ScaffoldExtensionCommand extends TerminusCommand
         if (empty($site_env)) {
             $this->log()->error('Please provide site information.');
             Helpers\UtilityFunctions::usage();
-            return;
+            return 1;
         }
 
         $site = Helpers\UtilityFunctions::decypherSiteInfo($site_env);
@@ -73,7 +73,12 @@ class ScaffoldExtensionCommand extends TerminusCommand
 
         if (empty($job_name)) {
             $this->log()->error('Please provide a job ID.');
-            return;
+            return 1;
+        }
+
+        if (!Helpers\UtilityFunctions::jobExists($job_name)) {
+            $this->log()->error(sprintf('The %1$s job does not exist.', $job_name));
+            return 1;
         }
 
         $this->log()->notice(sprintf('Attempting to run the %1$s job on %2$s.%3$s...', $job_name, $site_id, $env));
