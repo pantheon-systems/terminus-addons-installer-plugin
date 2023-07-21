@@ -71,15 +71,15 @@ class UtilityFunctions
         return $output;
     }
 
-	/**
-	 * Returns an array of available jobs.
-	 *
-	 * @return string
-	 */
-	public static function availableJobs() : array
-	{
-		return [
-			'install-ocp' => 'install-ocp: Installs Object Cache Pro',
-		];
-	}
+    /**
+     * Returns an array of available jobs.
+     *
+     * @return string
+     */
+    public static function availableJobs() : array
+    {
+        return [
+            'install-ocp' => 'install-ocp: Installs Object Cache Pro',
+        ];
+    }
 }
