@@ -7,11 +7,11 @@
 
 namespace Pantheon\TerminusScaffoldExtension\Commands;
 
-use League\Container\ContainerAwareInterface;
+use Pantheon\Terminus\Models;
 use Pantheon\Terminus\Commands\TerminusCommand;
 use Pantheon\TerminusScaffoldExtension\Helpers;
 
-class ScaffoldExtensionCommand extends TerminusCommand implements ContainerAwareInterface
+class ScaffoldExtensionCommand extends TerminusCommand
 {
     /**
      * Run a scaffold_extension UJR job.
