@@ -56,7 +56,10 @@ class UtilityFunctionsTest extends TestCase
      */
     public function testJobExists()
     {
-        $this->assertTrue(UtilityFunctions::jobExists('install_ocp'));
+        $available_jobs = UtilityFunctions::availableJobs();
+        foreach ($available_jobs as $job_name => $job_description) {
+            $this->assertTrue(UtilityFunctions::jobExists($job_name));
+        }
         $this->assertFalse(UtilityFunctions::jobExists('not-a-job'));
     }
 }
