@@ -48,6 +48,15 @@ class UtilityFunctionsTest extends TestCase
     {
         $result = UtilityFunctions::availableJobs();
         $this->assertIsArray($result);
-        $this->assertArrayHasKey('install-ocp', $result);
+        $this->assertArrayHasKey('install_ocp', $result);
+    }
+
+    /**
+     * Test the jobExists function.
+     */
+    public function testJobExists()
+    {
+        $this->assertTrue(UtilityFunctions::jobExists('install_ocp'));
+        $this->assertFalse(UtilityFunctions::jobExists('not-a-job'));
     }
 }
