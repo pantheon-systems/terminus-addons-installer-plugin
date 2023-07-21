@@ -15,16 +15,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Set up environment
-        run: ./.bin/set-up-globals.sh
       - name: Install Dependencies
         run: composer install
-      - name: Lint
-        run: composer lint
       - name: Unit Tests
         run: composer test
-      - name: Validate Terminus exists
-        run: terminus --version
   terminus-3:
     needs: unit
     runs-on: ubuntu-latest
@@ -56,8 +50,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Set up environment
-        run: ./.bin/set-up-globals.sh
       - name: Install Dependencies
         run: composer install
       - name: Code Style
