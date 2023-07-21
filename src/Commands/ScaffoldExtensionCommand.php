@@ -13,6 +13,19 @@ use Pantheon\TerminusScaffoldExtension\Helpers;
 
 class ScaffoldExtensionCommand extends TerminusCommand
 {
+
+    /**
+     * @var Models
+     */
+    protected $env;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $environment = new Models\Environment();
+        $this->env = $environment;
+    }
+
     /**
      * Run a scaffold_extension UJR job.
      *
