@@ -29,6 +29,7 @@ jobs:
     env:
       TERMINUS_SITE: terminus-addons-installer-plugin
       TERMINUS_TOKEN: ${{ secrets.TERMINUS_TOKEN }}
+      BUILD_NUM: ${{ github.run_number }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
