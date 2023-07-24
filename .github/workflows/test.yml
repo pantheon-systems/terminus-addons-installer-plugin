@@ -28,6 +28,7 @@ jobs:
     name: Terminus 3 Functional Tests
     env:
       TERMINUS_SITE: terminus-addons-installer-plugin
+      TERMINUS_TOKEN: ${{ secrets.TERMINUS_TOKEN }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
