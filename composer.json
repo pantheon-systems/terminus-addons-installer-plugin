@@ -1,6 +1,6 @@
 {
-    "name": "pantheon-systems/terminus-scaffold-extension-plugin",
-    "description": "An example Terminus command",
+    "name": "pantheon-systems/terminus-addons-installer-plugin",
+    "description": "Adds the `scaffold-extension` command and sub-commands `scaffold-extension:list` and `scaffold-extension:run <job>` to Terminus.",
     "type": "terminus-plugin",
     "license": "MIT",
     "autoload": {
@@ -33,7 +33,7 @@
     },
     "extra": {
         "terminus": {
-            "compatible-version": "^1||^2||^3"
+            "compatible-version": "^3"
         }
     }
 }

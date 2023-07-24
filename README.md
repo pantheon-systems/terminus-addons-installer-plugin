@@ -1,9 +1,9 @@
-# Terminus Scaffold Extension Plugin
+# Terminus Addons Installer Plugin
 
-[![Build Status](https://github.com/pantheon-systems/terminus-scaffold-extension-plugin/actions/workflows/test.yml/badge.svg)](https://github.com/pantheon-systems/terminus-scaffold-extension-plugin/actions/workflows/test.yml)
+[![Build Status](https://github.com/pantheon-systems/terminus-addons-installer-plugin/actions/workflows/test.yml/badge.svg)](https://github.com/pantheon-systems/terminus-addons-installer-plugin/actions/workflows/test.yml)
 [![Actively Maintained](https://img.shields.io/badge/Pantheon-Actively_Maintained-yellow?logo=pantheon&color=FFDC28)](https://pantheon.io/docs/oss-support-levels#actively-maintained-support)
 
-[![Terminus v2.x - v3.x Compatible](https://img.shields.io/badge/terminus-2.x%20--%203.x-green.svg)](https://github.com/pantheon-systems/terminus-scaffold-extension-plugin/tree/2.x)
+[![Terminus v3.x Compatible](https://img.shields.io/badge/terminus-3.x-green.svg)](https://github.com/pantheon-systems/terminus-addons-installer-plugin/tree/3.x)
 
 Adds the `scaffold-extension` command and sub-commands `scaffold-extension:list` and `scaffold-extension:run <job>` to Terminus. 
 
@@ -42,13 +42,13 @@ Runs the specified `scaffold_extension` job.
 
 To install this plugin using Terminus 3:
 ```
-terminus self:plugin:install terminus-scaffold-extension-plugin
+terminus self:plugin:install terminus-addons-installer-plugin
 ```
 
 On older versions of Terminus:
 ```
 mkdir -p ~/.terminus/plugins
-curl https://github.com/pantheon-systems/terminus-scaffold-extension-plugin/archive/2.x.tar.gz -L | tar -C ~/.terminus/plugins -xvz
+curl https://github.com/pantheon-systems/terminus-addons-installer-plugin/archive/2.x.tar.gz -L | tar -C ~/.terminus/plugins -xvz
 ```
 
 ## Testing
