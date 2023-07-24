@@ -34,8 +34,6 @@ jobs:
         uses: actions/checkout@v2
       - name: Set up environment
         run: ./.bin/set-up-globals.sh
-      - name: Validate Terminus exists
-        run: terminus --version
       - name: Install plugin
         run: terminus self:plugin:install ${GITHUB_WORKSPACE}
       - name: Functional Tests
