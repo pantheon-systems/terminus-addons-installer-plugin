@@ -7,24 +7,14 @@
 
 namespace Pantheon\TerminusScaffoldExtension\Commands;
 
-use Pantheon\Terminus\Models;
+use Pantheon\Terminus\Site\SiteAwareTrait;
+use Pantheon\Terminus\Site\SiteAwareInterface;
 use Pantheon\Terminus\Commands\TerminusCommand;
 use Pantheon\TerminusScaffoldExtension\Helpers;
 
-class ScaffoldExtensionCommand extends TerminusCommand
+class ScaffoldExtensionCommand extends TerminusCommand implements SiteAwareInterface
 {
-
-    /**
-     * @var Models
-     */
-    protected $env;
-
-    public function __construct()
-    {
-        parent::__construct();
-        $environment = new Models\Environment();
-        $this->env = $environment;
-    }
+    use SiteAwareTrait;
 
     /**
      * Run a scaffold_extension UJR job.
