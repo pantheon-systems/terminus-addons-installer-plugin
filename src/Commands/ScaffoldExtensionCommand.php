@@ -59,6 +59,8 @@ class ScaffoldExtensionCommand extends TerminusCommand implements SiteAwareInter
         $site_arr = Helpers\UtilityFunctions::decypherSiteInfo($site_info);
         $site_id = $site_arr['id'];
         $site_env = $site_arr['env'];
+        $site = $this->getSite($site_id);
+        $env = $site->getEnvironments()->get($site_env);
 
         if (empty($job_name)) {
             $this->log()->error('Please provide a job ID.');
@@ -72,7 +74,7 @@ class ScaffoldExtensionCommand extends TerminusCommand implements SiteAwareInter
 
         $this->log()->notice(sprintf('Attempting to run the %1$s job on %2$s.%3$s...', $job_name, $site_id, $site_env));
 
-        return $this->env->getWorkflows()->create('scaffold_extension', compact('site_id', 'env', 'job_name'));
+        return $env->getWorkflows()->create('scaffold_extension', compact('site_id', 'env', 'job_name'));
     }
 
     /**
