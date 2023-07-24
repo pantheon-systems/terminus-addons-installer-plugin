@@ -79,7 +79,7 @@ class ScaffoldExtensionCommand extends TerminusCommand implements SiteAwareInter
 
         $this->log()->notice(sprintf('Attempting to run the %1$s job on %2$s.%3$s...', $job_name, $site_id, $site_env));
 
-        return $env->getWorkflows()->create('scaffold_extension', compact('params'));
+        return $env->getWorkflows()->create('scaffold_extensions', compact('params'));
     }
 
     /**
