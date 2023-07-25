@@ -5,66 +5,66 @@ if [ -z "$TERMINUS_SITE" ]; then
   TERMINUS_SITE=terminus-addons-installer-plugin
 fi
 
-@test "run scaffold-extension command" {
-  run terminus scaffold-extension
-  [[ $output == *"terminus scaffold-extension"* ]]
+@test "run addons-install command" {
+  run terminus addons-install
+  [[ $output == *"terminus addons-install"* ]]
   [ "$status" -eq 0 ]
 
-  run terminus scaffold
-  [[ $output == *"terminus scaffold-extension"* ]]
-  [ "$status" -eq 0 ]
-}
-
-@test "run scaffold-extension:list command" {
-  run terminus scaffold-extension:list
-  [[ $output == *"Listing available jobs..."* ]]
-  [ "$status" -eq 0 ]
-
-  run terminus scaffold:list
-  [[ $output == *"Listing available jobs..."* ]]
+  run terminus install
+  [[ $output == *"terminus addons-install"* ]]
   [ "$status" -eq 0 ]
 }
 
-@test "run scaffold-extension:run command" {
-  run terminus scaffold-extension:run ${TERMINUS_SITE} install_ocp
+@test "run addons-install:list command" {
+  run terminus addons-install:list
+  [[ $output == *"Listing available jobs..."* ]]
+  [ "$status" -eq 0 ]
+
+  run terminus install:list
+  [[ $output == *"Listing available jobs..."* ]]
+  [ "$status" -eq 0 ]
+}
+
+@test "run addons-install:run command" {
+  run terminus addons-install:run ${TERMINUS_SITE} install_ocp
   [[ $output == *"Attempting to run the install_ocp job"* ]]
   [ "$status" -eq 0 ]
 
-  run terminus scaffold:run ${TERMINUS_SITE} install_ocp
+  run terminus install:run ${TERMINUS_SITE} install_ocp
   [[ $output == *"Attempting to run the install_ocp job"* ]]
   [ "$status" -eq 0 ]
 
-  run terminus scaffold-extension:run ${TERMINUS_SITE}.dev install_ocp
+  run terminus addons-install:run ${TERMINUS_SITE}.dev install_ocp
   [[ $output == *"Attempting to run the install_ocp job"* ]]
   [ "$status" -eq 0 ]
 
-  run terminus scaffold:run ${TERMINUS_SITE}.dev install_ocp
+  run terminus install:run ${TERMINUS_SITE}.dev install_ocp
   [[ $output == *"Attempting to run the install_ocp job"* ]]
   [ "$status" -eq 0 ]
 }
 
 @test "test failure states" {
-  run terminus scaffold:run ${TERMINUS_SITE}
+  run terminus install:run ${TERMINUS_SITE}
   [[ $output == *"Please provide a job ID"* ]]
   [ "$status" -eq 1 ]
 
-  run terminus scaffold:run
+  run terminus install:run
   [[ $output == *"Please provide site information"* ]]
   [ "$status" -eq 1 ]
 
-  run terminus scaffold-extension:run ${TERMINUS_SITE} bar
+  run terminus addons-install:run ${TERMINUS_SITE} bar
   [[ $output == *"The bar job does not exist"* ]]
   [ "$status" -eq 1 ]
 
-  run terminus scaffold:run ${TERMINUS_SITE} bar
+  run terminus install:run ${TERMINUS_SITE} bar
   [[ $output == *"The bar job does not exist"* ]]
   [ "$status" -eq 1 ]
 
-  run terminus scaffold-extension:run ${TERMINUS_SITE}.dev bar
+  run terminus addons-install:run ${TERMINUS_SITE}.dev bar
   [[ $output == *"The bar job does not exist"* ]]
   [ "$status" -eq 1 ]
 
-  run terminus scaffold:run ${TERMINUS_SITE}.dev bar
+  run terminus install:run ${TERMINUS_SITE}.dev bar
   [[ $output == *"The bar job does not exist"* ]]
   [ "$status" -eq 1 ]
 }
