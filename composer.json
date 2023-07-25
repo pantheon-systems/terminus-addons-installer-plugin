@@ -1,6 +1,6 @@
 {
     "name": "pantheon-systems/terminus-addons-installer-plugin",
-    "description": "Allows Terminus to trigger workflows on the platform to install addons.",
+    "description": "Allows Terminus to trigger workflows on the platform that configure themes & plugins.",
     "type": "terminus-plugin",
     "license": "MIT",
     "autoload": {

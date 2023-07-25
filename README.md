@@ -5,7 +5,7 @@
 
 [![Terminus v3.x Compatible](https://img.shields.io/badge/terminus-3.x-green.svg)](https://github.com/pantheon-systems/terminus-addons-installer-plugin/tree/3.x)
 
-Adds the `addons-install` command and sub-commands `addons-install:list` and `addons-install:run <job>` to Terminus. 
+Adds the `addons-install` command and sub-commands `addons-install:list` and `addons-install:run <job>` to Terminus. Use this Terminus Plugin to run workflows that configure themes & plugins.
 
 Learn more about Terminus Plugins in the
 [Terminus Plugins documentation](https://pantheon.io/docs/terminus/plugins)
