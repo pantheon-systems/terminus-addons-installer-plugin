@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 class UtilityFunctionsTest extends TestCase
 {
     /**
-     * Test the base scaffold-extension command.
+     * Test the base addons-install command.
      *
      * @dataProvider baseCommandDataProvider
      */
@@ -24,9 +24,9 @@ class UtilityFunctionsTest extends TestCase
     public function baseCommandDataProvider()
     {
         return [
-            ['terminus scaffold-extension  (aliases: scaffold, scaffold-extension:help, scaffold:help)'],
-            ['terminus scaffold-extension:list (aliases: scaffold:list)'],
-            ['terminus scaffold-extension:run (aliases: scaffold:run)'],
+            ['terminus addons-install  (aliases: install, addons-install:help, install:help)'],
+            ['terminus addons-install:list (aliases: install:list)'],
+            ['terminus addons-install:run (aliases: install:run)'],
         ];
     }
 
