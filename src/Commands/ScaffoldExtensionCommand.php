@@ -82,7 +82,7 @@ class ScaffoldExtensionCommand extends TerminusCommand implements SiteAwareInter
     }
 
     /**
-     * List the available specified jobs.
+     * List the available jobs.
      *
      * @command addons-install:list
      * @aliases install:list
