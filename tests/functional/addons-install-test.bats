@@ -27,19 +27,35 @@ fi
 
 @test "run addons-install:run command" {
   run terminus addons-install:run ${TERMINUS_SITE} install_ocp
-  [[ $output == *"Attempting to run the install_ocp job"* ]]
+  [[ $output == *"Attempting to run the install-ocp job"* ]]
   [ "$status" -eq 0 ]
 
   run terminus install:run ${TERMINUS_SITE} install_ocp
-  [[ $output == *"Attempting to run the install_ocp job"* ]]
+  [[ $output == *"Attempting to run the install-ocp job"* ]]
   [ "$status" -eq 0 ]
 
   run terminus addons-install:run ${TERMINUS_SITE}.dev install_ocp
-  [[ $output == *"Attempting to run the install_ocp job"* ]]
+  [[ $output == *"Attempting to run the install-ocp job"* ]]
   [ "$status" -eq 0 ]
 
   run terminus install:run ${TERMINUS_SITE}.dev install_ocp
-  [[ $output == *"Attempting to run the install_ocp job"* ]]
+  [[ $output == *"Attempting to run the install-ocp job"* ]]
+  [ "$status" -eq 0 ]
+
+  run terminus addons-install:run ${TERMINUS_SITE} install-ocp
+  [[ $output == *"Attempting to run the install-ocp job"* ]]
+  [ "$status" -eq 0 ]
+
+  run terminus install:run ${TERMINUS_SITE} install-ocp
+  [[ $output == *"Attempting to run the install-ocp job"* ]]
+  [ "$status" -eq 0 ]
+
+  run terminus addons-install:run ${TERMINUS_SITE}.dev install-ocp
+  [[ $output == *"Attempting to run the install-ocp job"* ]]
+  [ "$status" -eq 0 ]
+
+  run terminus install:run ${TERMINUS_SITE}.dev install-ocp
+  [[ $output == *"Attempting to run the install-ocp job"* ]]
   [ "$status" -eq 0 ]
 }
 
