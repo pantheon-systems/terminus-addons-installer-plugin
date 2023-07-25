@@ -66,6 +66,7 @@ class ScaffoldExtensionCommand extends TerminusCommand implements SiteAwareInter
             return 1;
         }
 
+        $job_name = $this->validateJobName($job_name);
         if (!Helpers\UtilityFunctions::jobExists($job_name)) {
             $this->log()->error(sprintf('The %1$s job does not exist.', $job_name));
             return 1;
@@ -76,7 +77,7 @@ class ScaffoldExtensionCommand extends TerminusCommand implements SiteAwareInter
             'with_db' => false, // Todo: This will be a flag in a later iteration.
         ];
 
-        $this->log()->notice(sprintf('Attempting to run the %1$s job on %2$s.%3$s...', $job_name, $site_id, $site_env));
+        $this->log()->notice(sprintf('Attempting to run the %1$s job on %2$s.%3$s...', str_replace('_','-',$job_name), $site_id, $site_env));
 
         return $env->getWorkflows()->create('scaffold_extensions', compact('params'));
     }
@@ -91,5 +92,17 @@ class ScaffoldExtensionCommand extends TerminusCommand implements SiteAwareInter
     {
         $this->log()->notice('Listing available jobs...');
         return Helpers\UtilityFunctions::availableJobs();
+    }
+
+    /**
+     * Check job name. Allow underscores or dashes. Return only underscores.
+     *
+     * @param string $job_name
+     * @return string
+     */
+    public function validateJobName(string $job_name) : string
+    {
+        $job_name = str_replace('-', '_', $job_name);
+        return $job_name;
     }
 }

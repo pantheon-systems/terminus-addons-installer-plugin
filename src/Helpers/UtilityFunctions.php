@@ -79,7 +79,7 @@ class UtilityFunctions
     public static function availableJobs() : array
     {
         return [
-            'install_ocp' => 'install_ocp: Installs Object Cache Pro',
+            'install_ocp' => 'install-ocp: Installs Object Cache Pro',
         ];
     }
 
