@@ -77,7 +77,7 @@ class ScaffoldExtensionCommand extends TerminusCommand implements SiteAwareInter
             'with_db' => false, // Todo: This will be a flag in a later iteration.
         ];
 
-        $this->log()->notice(sprintf('Attempting to run the %1$s job on %2$s.%3$s...', str_replace('_','-',$job_name), $site_id, $site_env));
+        $this->log()->notice(sprintf('Attempting to run the %1$s job on %2$s.%3$s...', str_replace('_', '-', $job_name), $site_id, $site_env));
 
         return $env->getWorkflows()->create('scaffold_extensions', compact('params'));
     }
