@@ -2,7 +2,7 @@
 /**
  * terminus scaffold-extension
  *
- * This command allows specific scaffold_extension UJR jobs to be run from Terminus.
+ * This command allows specific scaffold_extensions UJR jobs to be run from Terminus.
  */
 
 namespace Pantheon\TerminusScaffoldExtension\Commands;
@@ -17,30 +17,29 @@ class ScaffoldExtensionCommand extends TerminusCommand implements SiteAwareInter
     use SiteAwareTrait;
 
     /**
-     * Run a scaffold_extension UJR job.
-     *
+     * Run a specified job.
      *
      * @command addons-install
      * @aliases install
      */
-    public function scaffoldExtension()
+    public function addonsInstall()
     {
         return Helpers\UtilityFunctions::usage();
     }
 
     /**
-     * Run the scaffold_extension UJR job.
+     * Display command usage.
      *
      * @command addons-install:help
      * @aliases install:help
      */
-    public function scaffoldExtensionHelp()
+    public function addonsInstallHelp()
     {
-        return $this->scaffoldExtension();
+        return $this->addonsInstall();
     }
 
     /**
-     * Run the scaffold_extension UJR job.
+     * Run the specified job.
      *
      * @command addons-install:run
      * @aliases install:run
@@ -83,7 +82,7 @@ class ScaffoldExtensionCommand extends TerminusCommand implements SiteAwareInter
     }
 
     /**
-     * List the available scaffold_extension UJR jobs.
+     * List the available specified jobs.
      *
      * @command addons-install:list
      * @aliases install:list
