@@ -72,6 +72,16 @@ class ScaffoldExtensionCommand extends TerminusCommand implements SiteAwareInter
             return 1;
         }
 
+        // Fail if there's uncommitted code in SFTP mode.
+        if ($env->get('connection_mode') === 'sftp') {
+            // Check if there is uncommitted code.
+            $change_count = count((array)$env->diffstat());
+            if ($change_count > 0) {
+                $this->log()->error(sprintf('There are %1$s uncommitted code changes on %2$s.%3$s. Please commit or revert them before running this job.', $change_count, $site_id, $site_env));
+                return 1;
+            }
+        }
+
         $params = [
             'job_name' => $job_name,
             'with_db' => false, // Todo: This will be a flag in a later iteration.
