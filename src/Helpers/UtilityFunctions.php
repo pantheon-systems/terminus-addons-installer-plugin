@@ -43,7 +43,7 @@ class UtilityFunctions
     }
 
     /**
-     * Returns the full usage and information for the scaffold-extension command.
+     * Returns the full usage and information for the addons-install command.
      *
      * @return string
      */
@@ -51,22 +51,22 @@ class UtilityFunctions
     {
         $bold = "\e[1m";
 
-        $output = $bold . "terminus scaffold-extension  (aliases: scaffold, scaffold-extension:help, scaffold:help)\n" . self::DEFAULT_COLOR;
+        $output = $bold . "terminus addons-install  (aliases: install, addons-install:help, install:help)\n" . self::DEFAULT_COLOR;
         $output .= self::UPDATE_VARS_COLOR . "Description:\n" . self::DEFAULT_COLOR;
         $output .= "\tDisplays this help message.\n";
         $output .= self::UPDATE_VARS_COLOR . "Usage:\n" . self::DEFAULT_COLOR;
-        $output .= "\tterminus scaffold-extension\n\n";
-        $output .= $bold . "terminus scaffold-extension:list (aliases: scaffold:list)\n" . self::DEFAULT_COLOR;
+        $output .= "\tterminus addons-install\n\n";
+        $output .= $bold . "terminus addons-install:list (aliases: install:list)\n" . self::DEFAULT_COLOR;
         $output .= self::UPDATE_VARS_COLOR . "Description:\n" . self::DEFAULT_COLOR;
-        $output .= "\tLists available scaffold_extension UJR jobs.\n";
+        $output .= "\tLists available jobs.\n";
         $output .= self::UPDATE_VARS_COLOR . "Usage:\n" . self::DEFAULT_COLOR;
-        $output .= "\tterminus scaffold-extension:list <site_id>.<env>\n\n";
-        $output .= $bold . "terminus scaffold-extension:run (aliases: scaffold:run)\n" . self::DEFAULT_COLOR;
+        $output .= "\tterminus addons-install:list <site_id>.<env>\n\n";
+        $output .= $bold . "terminus addons-install:run (aliases: install:run)\n" . self::DEFAULT_COLOR;
         $output .= self::UPDATE_VARS_COLOR . "Description:\n" . self::DEFAULT_COLOR;
-        $output .= "\tRuns the specified scaffold_extension UJR job.\n";
+        $output .= "\tRuns the specified job.\n";
         $output .= self::UPDATE_VARS_COLOR . "Usage:\n" . self::DEFAULT_COLOR;
-        $output .= "\tterminus scaffold-extension:run <site_id>.<env> <job> [--with-db]\n\n";
-        $output .= "For more information, run terminus help scaffold-extension:<command>.";
+        $output .= "\tterminus addons-install:run <site_id>.<env> <job> [--with-db]\n\n";
+        $output .= "For more information, run terminus help addons-install:<command>.";
 
         return $output;
     }

@@ -20,8 +20,8 @@ class ScaffoldExtensionCommand extends TerminusCommand implements SiteAwareInter
      * Run a scaffold_extension UJR job.
      *
      *
-     * @command scaffold-extension
-     * @aliases scaffold
+     * @command addons-install
+     * @aliases install
      */
     public function scaffoldExtension()
     {
@@ -31,8 +31,8 @@ class ScaffoldExtensionCommand extends TerminusCommand implements SiteAwareInter
     /**
      * Run the scaffold_extension UJR job.
      *
-     * @command scaffold-extension:help
-     * @aliases scaffold:help
+     * @command addons-install:help
+     * @aliases install:help
      */
     public function scaffoldExtensionHelp()
     {
@@ -42,8 +42,8 @@ class ScaffoldExtensionCommand extends TerminusCommand implements SiteAwareInter
     /**
      * Run the scaffold_extension UJR job.
      *
-     * @command scaffold-extension:run
-     * @aliases scaffold:run
+     * @command addons-install:run
+     * @aliases install:run
      *
      * @param string $site_info
      * @param string $job_name
@@ -85,8 +85,8 @@ class ScaffoldExtensionCommand extends TerminusCommand implements SiteAwareInter
     /**
      * List the available scaffold_extension UJR jobs.
      *
-     * @command scaffold-extension:list
-     * @aliases scaffold:list
+     * @command addons-install:list
+     * @aliases install:list
      */
     public function listJobs()
     {
