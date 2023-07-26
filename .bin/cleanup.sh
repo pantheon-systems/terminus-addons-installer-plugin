@@ -1,5 +1,13 @@
 #!/bin/bash
 set +ex
 SITE_ENV="${TERMINUS_SITE}.ci-${BUILD_NUM}"
-# Delete the multidev environment.
-terminus multidev:delete --delete-branch --yes $SITE_ENV
+# Nuke any lingering multidev environments from orbit.
+for ENV in $(terminus multidev:list --field=Name --format=list $TERMINUS_SITE); do
+  if [[ $ENV == ci-* ]]; then
+	terminus multidev:delete --delete-branch --yes $ENV
+  fi
+  # Also dump any localtests environments.
+  if [[ $ENV == localtests ]]; then
+	terminus multidev:delete --delete-branch --yes $ENV
+  fi
+done
