@@ -47,7 +47,7 @@ class ScaffoldExtensionCommand extends TerminusCommand implements SiteAwareInter
      * @param string $site_info
      * @param string $job_name
      */
-    public function runExtension(string $site_info = '', $job_name = '')
+    public function runScaffoldExtensionsJob(string $site_info = '', $job_name = '')
     {
         if (empty($site_info)) {
             $this->log()->error('Please provide site information.');
