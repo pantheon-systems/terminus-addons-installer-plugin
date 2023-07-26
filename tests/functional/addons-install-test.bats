@@ -19,6 +19,12 @@ create_file() {
   echo "Running terminus connection:set ${SITE_ENV} sftp"
   terminus connection:set ${SITE_ENV} sftp
 
+  # Check if ~/.ssh directory exists
+  if [ ! -d ~/.ssh ]; then
+      mkdir ~/.ssh
+      chmod 700 ~/.ssh
+  fi
+
   # Check if ~/.ssh/config file exists
   if [ ! -f ~/.ssh/config ]; then
       touch ~/.ssh/config
