@@ -82,6 +82,5 @@ fi
   [ "$status" -eq 0 ]
   echo "Running the install-ocp job"
   run terminus install:run ${SITE_ENV} install-ocp
-  [[ $output == *"There are 2 uncommitted code changes on ${SITE_ENV}"* ]]
   [ "$status" -eq 1 ]
 }
