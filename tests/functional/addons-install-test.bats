@@ -82,6 +82,6 @@ fi
   [ "$status" -eq 0 ]
   echo "Running the install-ocp job"
   run terminus install:run ${SITE_ENV} install-ocp
-  [[ $output ~= *"Please commit or revert them before running this job"* ]]
+  [[ $output == *"Please commit or revert them before running this job"* ]]
   [ "$status" -eq 1 ]
 }
