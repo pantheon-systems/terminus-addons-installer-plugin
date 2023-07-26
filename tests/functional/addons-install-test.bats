@@ -3,7 +3,8 @@
 # Check if TERMINUS_SITE is defined, otherwise define it as terminus-addons-installer-plugin.
 if [ -z "$TERMINUS_SITE" ]; then
   TERMINUS_SITE=terminus-addons-installer-plugin
-  SITE_ENV=dev
+  terminus multidev:create $TERMINUS_SITE.dev localtests
+  SITE_ENV="${TERMINUS_SITE}.localtests"
 else
   # Always use the multidev if in CI.
   SITE_ENV="${TERMINUS_SITE}.ci-${BUILD_NUM}"
