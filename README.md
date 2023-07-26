@@ -33,7 +33,7 @@ Runs the specified job.
 <!-- TODO: add the flag support in a future release
 #### Flags
 
-* `--with-db`: If included, the job will be run with a database connection.
+* `--skip-db`: If included, the job will be run without a database connection.
 -->
 ## Usage
 * `terminus addons-install:list`

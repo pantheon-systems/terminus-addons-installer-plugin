@@ -55,6 +55,7 @@ class ScaffoldExtensionCommand extends TerminusCommand implements SiteAwareInter
             return 1;
         }
 
+        $with_db = true; // Todo: In the future, this will be the opposite of the --skip-db flag, if passed.
         $site_arr = Helpers\UtilityFunctions::decypherSiteInfo($site_info);
         $site_id = $site_arr['id'];
         $site_env = $site_arr['env'];
@@ -84,7 +85,7 @@ class ScaffoldExtensionCommand extends TerminusCommand implements SiteAwareInter
 
         $params = [
             'job_name' => $job_name,
-            'with_db' => false, // Todo: This will be a flag in a later iteration.
+            'with_db' => $with_db, // Todo: This will be a flag in a later iteration.
         ];
 
         $this->log()->notice(sprintf('Attempting to run the %1$s job on %2$s.%3$s...', str_replace('_', '-', $job_name), $site_id, $site_env));
