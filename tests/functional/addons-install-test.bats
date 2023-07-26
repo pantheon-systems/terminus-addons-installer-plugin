@@ -71,8 +71,8 @@ fi
   echo "Running terminus connection:set ${SITE_ENV} sftp"
   terminus connection:set ${SITE_ENV} sftp
   # [ "$status" -eq 0 ]
-  echo "Running terminus wp ${SITE_ENV} -- plugin install hello-dolly"
-  terminus wp ${SITE_ENV} -- plugin install hello-dolly
+  echo "Running terminus wp ${SITE_ENV} -- php exec "touch testfile.txt""
+  terminus wp ${SITE_ENV} -- php exec "touch testfile.txt"
   # [ "$status" -eq 0 ]
   run terminus install:run ${SITE_ENV} install-ocp
   [[ $output == *"Please commit or revert them before running this job"* ]]
