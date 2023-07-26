@@ -69,11 +69,11 @@ fi
 @test "test failure state if command is run with uncommitted filesystem changes" {
   echo "Set up failure state with uncommitted filesystem changes"
   echo "Running terminus connection:set ${SITE_ENV} sftp"
-  run terminus connection:set ${SITE_ENV} sftp
-  [ "$status" -eq 0 ]
+  terminus connection:set ${SITE_ENV} sftp
+  # [ "$status" -eq 0 ]
   echo "Running terminus wp ${SITE_ENV} -- plugin install hello-dolly"
-  run terminus wp ${SITE_ENV} -- plugin install hello-dolly
-  [ "$status" -eq 0 ]
+  terminus wp ${SITE_ENV} -- plugin install hello-dolly
+  # [ "$status" -eq 0 ]
   run terminus install:run ${SITE_ENV} install-ocp
   [[ $output == *"Please commit or revert them before running this job"* ]]
   [ "$status" -eq 1 ]
