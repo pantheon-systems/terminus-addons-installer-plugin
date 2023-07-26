@@ -28,7 +28,3 @@ echo "StrictHostKeyChecking no" >> ~/.ssh/config
 echo "LogLevel ERROR" >> ~/.ssh/config
 # Set UserKnownHostsFile to /dev/null in ~/.ssh/config
 echo "UserKnownHostsFile /dev/null" >> ~/.ssh/config
-# Create the id_rsa file
-# echo "Creating the id_rsa file"
-# touch ~/.ssh/id_rsa
-# echo "$SSH_KEY" > ~/.ssh/id_rsa
