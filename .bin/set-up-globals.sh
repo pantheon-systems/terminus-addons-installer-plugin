@@ -21,12 +21,14 @@ if [ ! -f ~/.ssh/config ]; then
 	chmod 600 ~/.ssh/config
 fi
 
+echo "Editing the ~/.ssh/config file"
 # Set StrictHostKeyChecking to no in ~/.ssh/config
 echo "StrictHostKeyChecking no" >> ~/.ssh/config
 # Set LogLevel to ERROR in ~/.ssh/config
 echo "LogLevel ERROR" >> ~/.ssh/config
 # Set UserKnownHostsFile to /dev/null in ~/.ssh/config
 echo "UserKnownHostsFile /dev/null" >> ~/.ssh/config
-# Create the id_ed25519 file
-touch ~/.ssh/id_ed25519
-echo "$SSH_KEY" > ~/.ssh/id_ed25519
+# Create the id_rsa file
+echo "Creating the id_rsa file"
+touch ~/.ssh/id_rsa
+echo "$SSH_KEY" > ~/.ssh/id_rsa
