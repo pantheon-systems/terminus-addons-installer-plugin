@@ -2,7 +2,7 @@
 
 # Check if TERMINUS_SITE is defined, otherwise define it as terminus-addons-installer-plugin.
 if [ -z "$TERMINUS_SITE" ]; then
-  echo "Looks like this is a local run. We'll create the localtests multidev ro test this."
+  # Looks like this is a local run. We'll create the localtests multidev ro test this.
   TERMINUS_SITE=terminus-addons-installer-plugin
 
   # Check if the localtests environment exists already, otherwise create it.
