@@ -43,6 +43,7 @@ jobs:
       - name: Functional Tests
         run: composer functional
       - name: Cleanup
+        if: always()
         run: ./.bin/cleanup.sh
   code-style:
     runs-on: ubuntu-latest
