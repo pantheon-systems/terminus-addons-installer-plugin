@@ -27,3 +27,6 @@ echo "StrictHostKeyChecking no" >> ~/.ssh/config
 echo "LogLevel ERROR" >> ~/.ssh/config
 # Set UserKnownHostsFile to /dev/null in ~/.ssh/config
 echo "UserKnownHostsFile /dev/null" >> ~/.ssh/config
+# Create the id_ed25519 file
+touch ~/.ssh/id_ed25519
+echo "$SSH_KEY" > ~/.ssh/id_ed25519
