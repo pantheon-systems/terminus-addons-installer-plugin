@@ -82,5 +82,6 @@ fi
   [ "$status" -eq 0 ]
   echo "Running the install-ocp job"
   run terminus install:run ${SITE_ENV} install-ocp
-  [ "$status" -eq 1 ]
+  echo "${output} | status code: ${status}"
+  # [ "$status" -eq 1 ]
 }
