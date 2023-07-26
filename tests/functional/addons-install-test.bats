@@ -63,12 +63,12 @@ fi
   run terminus install:run ${SITE_ENV} bar
   [[ $output == *"The bar job does not exist"* ]]
   [ "$status" -eq 1 ]
+}
 
-  run terminus addons-install:run ${TERMINUS_SITE}.dev bar
-  [[ $output == *"The bar job does not exist"* ]]
-  [ "$status" -eq 1 ]
-
-  run terminus install:run ${TERMINUS_SITE}.dev bar
-  [[ $output == *"The bar job does not exist"* ]]
+@test "test failure state if command is run with uncommitted filesystem changes" {
+  run terminus connection:set sftp
+  run terminus wp ${SITE_ENV} -- plugin install hello-dolly
+  run terminus install:run ${SITE_ENV} install-ocp
+  [[ $output == *"Please commit or revert them before running this job"* ]]
   [ "$status" -eq 1 ]
 }
