@@ -44,6 +44,7 @@ jobs:
         uses: webfactory/ssh-agent@v0.7.0
         with:
           ssh-private-key: ${{ secrets.SSH_KEY }}
+          log-public-key: false
       - name: Functional Tests
         run: composer functional
       - name: Cleanup
