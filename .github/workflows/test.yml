@@ -30,9 +30,6 @@ jobs:
       TERMINUS_SITE: terminus-addons-installer-plugin
       TERMINUS_TOKEN: ${{ secrets.TERMINUS_TOKEN }}
       BUILD_NUM: ${{ github.run_number }}
-      SFTPUSER: ${{ secrets.SFTPUSER }}
-      SFTPHOST: ${{ secrets.SFTPHOST }}
-      SSH_KEY: ${{ secrets.SSH_KEY }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
