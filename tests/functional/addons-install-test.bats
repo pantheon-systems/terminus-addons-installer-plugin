@@ -3,6 +3,10 @@
 # Check if TERMINUS_SITE is defined, otherwise define it as terminus-addons-installer-plugin.
 if [ -z "$TERMINUS_SITE" ]; then
   TERMINUS_SITE=terminus-addons-installer-plugin
+  SITE_ENV=dev
+else
+  # Always use the multidev if in CI.
+  SITE_ENV="${TERMINUS_SITE}.ci-${BUILD_NUM}"
 fi
 
 @test "run addons-install command" {
@@ -26,41 +30,25 @@ fi
 }
 
 @test "run addons-install:run command" {
-  run terminus addons-install:run ${TERMINUS_SITE} install_ocp
+  run terminus addons-install:run ${SITE_ENV} install_ocp
   [[ $output == *"Attempting to run the install-ocp job"* ]]
   [ "$status" -eq 0 ]
 
-  run terminus install:run ${TERMINUS_SITE} install_ocp
+  run terminus install:run ${SITE_ENV} install_ocp
   [[ $output == *"Attempting to run the install-ocp job"* ]]
   [ "$status" -eq 0 ]
 
-  run terminus addons-install:run ${TERMINUS_SITE}.dev install_ocp
+  run terminus addons-install:run ${SITE_ENV} install-ocp
   [[ $output == *"Attempting to run the install-ocp job"* ]]
   [ "$status" -eq 0 ]
 
-  run terminus install:run ${TERMINUS_SITE}.dev install_ocp
-  [[ $output == *"Attempting to run the install-ocp job"* ]]
-  [ "$status" -eq 0 ]
-
-  run terminus addons-install:run ${TERMINUS_SITE} install-ocp
-  [[ $output == *"Attempting to run the install-ocp job"* ]]
-  [ "$status" -eq 0 ]
-
-  run terminus install:run ${TERMINUS_SITE} install-ocp
-  [[ $output == *"Attempting to run the install-ocp job"* ]]
-  [ "$status" -eq 0 ]
-
-  run terminus addons-install:run ${TERMINUS_SITE}.dev install-ocp
-  [[ $output == *"Attempting to run the install-ocp job"* ]]
-  [ "$status" -eq 0 ]
-
-  run terminus install:run ${TERMINUS_SITE}.dev install-ocp
+  run terminus install:run ${SITE_ENV} install-ocp
   [[ $output == *"Attempting to run the install-ocp job"* ]]
   [ "$status" -eq 0 ]
 }
 
 @test "test failure states" {
-  run terminus install:run ${TERMINUS_SITE}
+  run terminus install:run ${SITE_ENV}
   [[ $output == *"Please provide a job ID"* ]]
   [ "$status" -eq 1 ]
 
@@ -68,11 +56,11 @@ fi
   [[ $output == *"Please provide site information"* ]]
   [ "$status" -eq 1 ]
 
-  run terminus addons-install:run ${TERMINUS_SITE} bar
+  run terminus addons-install:run ${SITE_ENV} bar
   [[ $output == *"The bar job does not exist"* ]]
   [ "$status" -eq 1 ]
 
-  run terminus install:run ${TERMINUS_SITE} bar
+  run terminus install:run ${SITE_ENV} bar
   [[ $output == *"The bar job does not exist"* ]]
   [ "$status" -eq 1 ]
 
