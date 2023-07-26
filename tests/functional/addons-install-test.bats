@@ -70,10 +70,11 @@ fi
   echo "Set up failure state with uncommitted filesystem changes"
   echo "Running terminus connection:set ${SITE_ENV} sftp"
   terminus connection:set ${SITE_ENV} sftp
-  # [ "$status" -eq 0 ]
-  echo "Running terminus wp ${SITE_ENV} -- php exec "touch testfile.txt""
-  terminus wp ${SITE_ENV} -- php exec "touch testfile.txt"
-  # [ "$status" -eq 0 ]
+  echo "Connecting to server via SFTP and creating a file"
+  sftp -o StrictHostKeyChecking=no -o LogLevel=ERROR -o UserKnownHostsFile=/dev/null -i ~/.ssh/id_rsa -P 2222 ${SFTPUSER}@${SFTPHOST} <<EOF
+  touch /tmp/foo.txt
+  EOF
+
   run terminus install:run ${SITE_ENV} install-ocp
   [[ $output == *"Please commit or revert them before running this job"* ]]
   [ "$status" -eq 1 ]
