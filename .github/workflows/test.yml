@@ -40,6 +40,10 @@ jobs:
         run: ./.bin/set-up-globals.sh
       - name: Install plugin
         run: terminus self:plugin:install ${GITHUB_WORKSPACE}
+      - name: Install SSH key
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_KEY }}
       - name: Functional Tests
         run: composer functional
       - name: Cleanup
