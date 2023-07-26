@@ -16,13 +16,6 @@ else
   SITE_ENV="${TERMINUS_SITE}.ci-${BUILD_NUM}"
 fi
 
-create_file() {
-  echo "Running terminus connection:set ${SITE_ENV} sftp"
-  terminus connection:set ${SITE_ENV} sftp
-  echo "Running terminus wp ${SITE_ENV} -- plugin install hello-dolly"
-  terminus wp ${SITE_ENV} -- plugin install hello-dolly
-}
-
 @test "run addons-install command" {
   run terminus addons-install
   [[ $output == *"terminus addons-install"* ]]
@@ -81,7 +74,13 @@ create_file() {
 
 @test "test failure state if command is run with uncommitted filesystem changes" {
   echo "Set up failure state with uncommitted filesystem changes"
-  create_file
+  echo "Running terminus connection:set ${SITE_ENV} sftp"
+  run terminus connection:set ${SITE_ENV} sftp
+  [ "$status" -eq 0 ]
+  echo "Running terminus wp ${SITE_ENV} -- plugin install hello-dolly"
+  terminus wp ${SITE_ENV} -- plugin install hello-dolly
+  [ "$status" -eq 0 ]
+  echo "Running the install-ocp job"
   run terminus install:run ${SITE_ENV} install-ocp
   [[ $output == *"Please commit or revert them before running this job"* ]]
   [ "$status" -eq 1 ]
