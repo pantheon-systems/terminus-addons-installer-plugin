@@ -18,11 +18,7 @@ fi
 create_file() {
   echo "Running terminus connection:set ${SITE_ENV} sftp"
   terminus connection:set ${SITE_ENV} sftp
-
-  echo "Connecting to server via SFTP and creating a file"
-  sftp -P 2222 ${SFTPUSER}@${SFTPHOST} <<EOF
-  touch /tmp/foo.txt
-EOF
+  terminus wp ${SITE_ENV} -- plugin install hello-dolly
 }
 
 @test "run addons-install command" {
