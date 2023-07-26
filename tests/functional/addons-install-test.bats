@@ -68,6 +68,7 @@ fi
 
 @test "test failure state if command is run with uncommitted filesystem changes" {
   echo "Set up failure state with uncommitted filesystem changes"
+  echo "Running terminus connection:set ${SITE_ENV} sftp"
   run terminus connection:set ${SITE_ENV} sftp
   [ "$status" -eq 0 ]
   echo "Running terminus wp ${SITE_ENV} -- plugin install hello-dolly"
