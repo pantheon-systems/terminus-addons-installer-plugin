@@ -84,7 +84,7 @@ fi
 @test "test failure state if command is run with uncommitted filesystem changes" {
   echo "Set up failure state with uncommitted filesystem changes"
   echo "Create a new multidev just for this failure test"
-  run terminus multidev:create ${TERMINUS_SITE}.dev failure-test
+  run terminus multidev:create ${TERMINUS_SITE}.dev fs-test-${BUILD_NUM}
   [ "$status" -eq 0 ]
   echo "Running terminus connection:set ${SITE_ENV} sftp"
   run terminus connection:set ${SITE_ENV} sftp
