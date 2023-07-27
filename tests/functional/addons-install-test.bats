@@ -16,6 +16,7 @@ if [ -z "$TERMINUS_SITE" ]; then
     terminus multidev:create $TERMINUS_SITE.dev ${LOCALENV}
   fi
   SITE_ENV="$TERMINUS_SITE"."$LOCALENV"
+  FS_TEST_ENV="$TERMINUS_SITE".fs-test
 
   # If we're in a local run, let's create and set up the multidev early. On CI runs, we do this in set-up-globals.sh.
   # Create a new multidev just for this failure test
@@ -28,7 +29,8 @@ if [ -z "$TERMINUS_SITE" ]; then
   terminus wp "$TERMINUS_SITE".fs-test -- plugin install hello-dolly
 else
   # Always use the multidev if in CI.
-  SITE_ENV="$TERMINUS_SITE".ci-"$BUILD_NUM}"
+  SITE_ENV="$TERMINUS_SITE".ci-"$BUILD_NUM"
+  FS_TEST_ENV="$TERMINUS_SITE".fs-test-"$BUILD_NUM"
 fi
 
 @test "run addons-install command" {
@@ -89,7 +91,7 @@ fi
 
 @test "test failure state if command is run with uncommitted filesystem changes" {
   # Run the install-ocp job on the fs-test environment we created earlier. We expect this to fail because we made changes to the filesystem.
-  run terminus install:run "$TERMINUS_SITE".fs-test install-ocp
+  run terminus install:run "$FS_TEST_ENV" install-ocp
   [[ $output == *"Please commit or revert them before running this job."* ]]
   [ "$status" -eq 1 ]
 }
