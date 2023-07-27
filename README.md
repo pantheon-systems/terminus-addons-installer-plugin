@@ -37,7 +37,7 @@ Runs the specified job.
 -->
 ## Usage
 * `terminus addons-install:list`
-* `terminus addons-install:run <site_id>.<env> <job> [--with-db]`
+* `terminus addons-install:run <site_id>.<env> <job> [--skip-db]`
 
 ## Installation
 
