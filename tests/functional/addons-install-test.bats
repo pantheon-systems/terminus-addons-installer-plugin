@@ -5,12 +5,17 @@ if [ -z "$TERMINUS_SITE" ]; then
   # Looks like this is a local run. We'll create the localtests multidev ro test this.
   TERMINUS_SITE=terminus-addons-installer-plugin
 
-  # Check if the localtests environment exists already, otherwise create it.
-  output=$(terminus multidev:list "$TERMINUS_SITE" || true)
-  if ! echo "$output" | grep -q "localtests"; then
-    terminus multidev:create $TERMINUS_SITE.dev localtests
+  # Check if the localtests environment exists already, otherwise create it. This can be passed locally as an environment variable but defaults to localtests.
+
+  if [ -z "$LOCALENV" ]; then
+    LOCALENV=localtests
   fi
-  SITE_ENV="${TERMINUS_SITE}.localtests"
+
+  output=$(terminus multidev:list "$TERMINUS_SITE" || true)
+  if ! echo "$output" | grep -q "${LOCALENV}"; then
+    terminus multidev:create $TERMINUS_SITE.dev ${LOCALENV}
+  fi
+  SITE_ENV="${TERMINUS_SITE}.${LOCALENV}"
 else
   # Always use the multidev if in CI.
   SITE_ENV="${TERMINUS_SITE}.ci-${BUILD_NUM}"
