@@ -15,10 +15,20 @@ if [ -z "$TERMINUS_SITE" ]; then
   if ! echo "$output" | grep -q "${LOCALENV}"; then
     terminus multidev:create $TERMINUS_SITE.dev ${LOCALENV}
   fi
-  SITE_ENV="${TERMINUS_SITE}.${LOCALENV}"
+  SITE_ENV="$TERMINUS_SITE"."$LOCALENV"
+
+  # If we're in a local run, let's create and set up the multidev early. On CI runs, we do this in set-up-globals.sh.
+  # Create a new multidev just for this failure test
+  terminus multidev:create "$TERMINUS_SITE".dev fs-test
+
+  # Switch to SFTP mode.
+  terminus connection:set "$TERMINUS_SITE".fs-test sftp
+
+  # Install the Hello Dolly plugin.
+  terminus wp "$TERMINUS_SITE".fs-test -- plugin install hello-dolly
 else
   # Always use the multidev if in CI.
-  SITE_ENV="${TERMINUS_SITE}.ci-${BUILD_NUM}"
+  SITE_ENV="$TERMINUS_SITE".ci-"$BUILD_NUM}"
 fi
 
 @test "run addons-install command" {
@@ -42,25 +52,25 @@ fi
 }
 
 @test "run addons-install:run command" {
-  run terminus addons-install:run ${SITE_ENV} install_ocp
+  run terminus addons-install:run "$SITE_ENV" install_ocp
   [[ $output == *"Attempting to run the install-ocp job"* ]]
   [ "$status" -eq 0 ]
 
-  run terminus install:run ${SITE_ENV} install_ocp
+  run terminus install:run "$SITE_ENV" install_ocp
   [[ $output == *"Attempting to run the install-ocp job"* ]]
   [ "$status" -eq 0 ]
 
-  run terminus addons-install:run ${SITE_ENV} install-ocp
+  run terminus addons-install:run "$SITE_ENV" install-ocp
   [[ $output == *"Attempting to run the install-ocp job"* ]]
   [ "$status" -eq 0 ]
 
-  run terminus install:run ${SITE_ENV} install-ocp
+  run terminus install:run "$SITE_ENV" install-ocp
   [[ $output == *"Attempting to run the install-ocp job"* ]]
   [ "$status" -eq 0 ]
 }
 
 @test "test failure states" {
-  run terminus install:run ${SITE_ENV}
+  run terminus install:run "$SITE_ENV"
   [[ $output == *"Please provide a job ID"* ]]
   [ "$status" -eq 1 ]
 
@@ -68,34 +78,18 @@ fi
   [[ $output == *"Please provide site information"* ]]
   [ "$status" -eq 1 ]
 
-  run terminus addons-install:run ${SITE_ENV} bar
+  run terminus addons-install:run "$SITE_ENV" bar
   [[ $output == *"The bar job does not exist"* ]]
   [ "$status" -eq 1 ]
 
-  run terminus install:run ${SITE_ENV} bar
+  run terminus install:run "$SITE_ENV" bar
   [[ $output == *"The bar job does not exist"* ]]
   [ "$status" -eq 1 ]
 }
 
 @test "test failure state if command is run with uncommitted filesystem changes" {
-  # Create a new multidev just for this failure test
-  run terminus multidev:create ${TERMINUS_SITE}.dev fs-test
-  [ "$status" -eq 0 ]
-
-  # Switch to SFTP mode.
-  run terminus connection:set ${TERMINUS_SITE}.fs-test sftp
-  [ "$status" -eq 0 ]
-
-  # Install the Hello Dolly plugin.
-  run terminus wp ${TERMINUS_SITE}.fs-test -- plugin install hello-dolly
-  [ "$status" -eq 0 ]
-
-  # Wait for previous actions to finish.
-  run terminus workflow:wait ${TERMINUS_SITE}.fs-test --max=30
-  [ "$status" -eq 0 ]
-
-  # Run the install-ocp job. We expect this to fail because we made changes to the filesystem.
-  run terminus install:run ${TERMINUS_SITE}.fs-test install-ocp
+  # Run the install-ocp job on the fs-test environment we created earlier. We expect this to fail because we made changes to the filesystem.
+  run terminus install:run "$TERMINUS_SITE".fs-test install-ocp
   [[ $output == *"Please commit or revert them before running this job."* ]]
   [ "$status" -eq 1 ]
 }
