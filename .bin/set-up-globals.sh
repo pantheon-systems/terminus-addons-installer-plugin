@@ -32,4 +32,4 @@ fi
 	echo "  UserKnownHostsFile /dev/null"
 } >> ~/.ssh/config
 
-terminus wp "$TERMINUS_SITE".fs-test -- plugin install hello-dolly
+terminus wp "$TERMINUS_SITE".fs-test-"$BUILD_NUM" -- plugin install hello-dolly
