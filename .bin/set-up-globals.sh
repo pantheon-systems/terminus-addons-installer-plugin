@@ -9,8 +9,8 @@ terminus whoami
 terminus multidev:create "$TERMINUS_SITE".dev ci-"$BUILD_NUM"
 terminus connection:set "$TERMINUS_SITE".ci-"$BUILD_NUM" git
 # Set up the environment for filesystem tests.
-terminus multidev:create "$TERMINUS_SITE".dev fs-test
-terminus connection:set "$TERMINUS_SITE".fs-test sftp
+terminus multidev:create "$TERMINUS_SITE".dev fs-test-"$BUILD_NUM"
+terminus connection:set "$TERMINUS_SITE".fs-test-"$BUILD_NUM" sftp
 
 # Check if ~/.ssh directory exists
 if [ ! -d ~/.ssh ]; then
