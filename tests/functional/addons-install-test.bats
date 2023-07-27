@@ -46,20 +46,24 @@ fi
   [[ $output == *"Attempting to run the install-ocp job"* ]]
   [ "$status" -eq 0 ]
 
+  terminus:workflow wait ${TERMINUS_SITE}
   run terminus install:run ${SITE_ENV} install_ocp
   [[ $output == *"Attempting to run the install-ocp job"* ]]
   [ "$status" -eq 0 ]
 
+  terminus:workflow wait ${TERMINUS_SITE}
   run terminus addons-install:run ${SITE_ENV} install-ocp
   [[ $output == *"Attempting to run the install-ocp job"* ]]
   [ "$status" -eq 0 ]
 
+  terminus:workflow wait ${TERMINUS_SITE}
   run terminus install:run ${SITE_ENV} install-ocp
   [[ $output == *"Attempting to run the install-ocp job"* ]]
   [ "$status" -eq 0 ]
 }
 
 @test "test failure states" {
+  terminus:workflow wait ${TERMINUS_SITE}
   run terminus install:run ${SITE_ENV}
   [[ $output == *"Please provide a job ID"* ]]
   [ "$status" -eq 1 ]
@@ -85,6 +89,8 @@ fi
   echo "Running terminus wp ${SITE_ENV} -- plugin install hello-dolly"
   run terminus wp ${SITE_ENV} -- plugin install hello-dolly
   [ "$status" -eq 0 ]
+
+  terminus:workflow wait ${TERMINUS_SITE}
   echo "Running the install-ocp job"
   run terminus install:run ${SITE_ENV} install-ocp
   echo "${output} | status code: ${status}"
