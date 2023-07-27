@@ -46,24 +46,20 @@ fi
   [[ $output == *"Attempting to run the install-ocp job"* ]]
   [ "$status" -eq 0 ]
 
-  terminus workflow:wait ${TERMINUS_SITE}
   run terminus install:run ${SITE_ENV} install_ocp
   [[ $output == *"Attempting to run the install-ocp job"* ]]
   [ "$status" -eq 0 ]
 
-  terminus workflow:wait ${TERMINUS_SITE}
   run terminus addons-install:run ${SITE_ENV} install-ocp
   [[ $output == *"Attempting to run the install-ocp job"* ]]
   [ "$status" -eq 0 ]
 
-  terminus workflow:wait ${TERMINUS_SITE}
   run terminus install:run ${SITE_ENV} install-ocp
   [[ $output == *"Attempting to run the install-ocp job"* ]]
   [ "$status" -eq 0 ]
 }
 
 @test "test failure states" {
-  terminus workflow:wait ${TERMINUS_SITE}
   run terminus install:run ${SITE_ENV}
   [[ $output == *"Please provide a job ID"* ]]
   [ "$status" -eq 1 ]
@@ -82,20 +78,24 @@ fi
 }
 
 @test "test failure state if command is run with uncommitted filesystem changes" {
-  echo "Set up failure state with uncommitted filesystem changes"
-  echo "Create a new multidev just for this failure test"
-  run terminus multidev:create ${TERMINUS_SITE}.dev fs-test-${BUILD_NUM}
-  [ "$status" -eq 0 ]
-  echo "Running terminus connection:set ${SITE_ENV} sftp"
-  run terminus connection:set ${SITE_ENV} sftp
-  [ "$status" -eq 0 ]
-  echo "Running terminus wp ${SITE_ENV} -- plugin install hello-dolly"
-  run terminus wp ${SITE_ENV} -- plugin install hello-dolly
+  # Create a new multidev just for this failure test
+  run terminus multidev:create ${TERMINUS_SITE}.dev fs-test
   [ "$status" -eq 0 ]
 
-  terminus workflow:wait ${TERMINUS_SITE}
-  echo "Running the install-ocp job"
-  run terminus install:run ${SITE_ENV} install-ocp
-  echo "${output} | status code: ${status}"
+  # Switch to SFTP mode.
+  run terminus connection:set ${TERMINUS_SITE}.fs-test sftp
+  [ "$status" -eq 0 ]
+
+  # Install the Hello Dolly plugin.
+  run terminus wp ${TERMINUS_SITE}.fs-test -- plugin install hello-dolly
+  [ "$status" -eq 0 ]
+
+  # Wait for previous actions to finish.
+  run terminus workflow:wait ${TERMINUS_SITE}.fs-test --max=30
+  [ "$status" -eq 0 ]
+
+  # Run the install-ocp job. We expect this to fail because we made changes to the filesystem.
+  run terminus install:run ${TERMINUS_SITE}.fs-test install-ocp
+  [[ $output == *"Please commit or revert them before running this job."* ]]
   [ "$status" -eq 1 ]
 }
