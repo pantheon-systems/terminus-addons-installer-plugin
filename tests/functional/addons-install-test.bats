@@ -87,6 +87,14 @@ fi
   run terminus install:run "$SITE_ENV" bar
   [[ $output == *"The bar job does not exist"* ]]
   [ "$status" -eq 1 ]
+
+  run terminus install:run "$TERMINUS_SITE".test install-ocp
+  [[ $output == *"You cannot run the install-ocp workflow in a test environment"* ]]
+  [ "$status" -eq 1 ]
+
+  run terminus install:run "$TERMINUS_SITE".live install-ocp
+  [[ $output == *"You cannot run the install-ocp workflow in a live environment"* ]]
+  [ "$status" -eq 1 ]
 }
 
 @test "test failure state if command is run with uncommitted filesystem changes" {
