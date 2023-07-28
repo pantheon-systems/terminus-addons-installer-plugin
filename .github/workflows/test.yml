@@ -34,7 +34,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Install SSH key
-        uses: webfactory/ssh-agent@d4b9b8f
+        uses: webfactory/ssh-agent@d4b9b8ff72958532804b70bbe600ad43b36d5f2e
         with:
           ssh-private-key: ${{ secrets.SSH_KEY }}
           log-public-key: false
