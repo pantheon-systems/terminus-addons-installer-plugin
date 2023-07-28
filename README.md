@@ -1,11 +1,11 @@
-# Terminus Scaffold Extension Plugin
+# Terminus Addons Installer Plugin
 
-[![Build Status](https://github.com/pantheon-systems/terminus-scaffold-extension-plugin/actions/workflows/test.yml/badge.svg)](https://github.com/pantheon-systems/terminus-scaffold-extension-plugin/actions/workflows/test.yml)
+[![Build Status](https://github.com/pantheon-systems/terminus-addons-installer-plugin/actions/workflows/test.yml/badge.svg)](https://github.com/pantheon-systems/terminus-addons-installer-plugin/actions/workflows/test.yml)
 [![Actively Maintained](https://img.shields.io/badge/Pantheon-Actively_Maintained-yellow?logo=pantheon&color=FFDC28)](https://pantheon.io/docs/oss-support-levels#actively-maintained-support)
 
-[![Terminus v2.x - v3.x Compatible](https://img.shields.io/badge/terminus-2.x%20--%203.x-green.svg)](https://github.com/pantheon-systems/terminus-scaffold-extension-plugin/tree/2.x)
+[![Terminus v3.x Compatible](https://img.shields.io/badge/terminus-3.x-green.svg)](https://github.com/pantheon-systems/terminus-addons-installer-plugin/tree/3.x)
 
-Adds the `scaffold-extension` command and sub-commands `scaffold-extension:list` and `scaffold-extension:run <job>` to Terminus. 
+Adds the `addons-install` command and sub-commands `addons-install:list` and `addons-install:run <job>` to Terminus. Use this Terminus Plugin to run workflows that configure themes & plugins.
 
 Learn more about Terminus Plugins in the
 [Terminus Plugins documentation](https://pantheon.io/docs/terminus/plugins)
@@ -16,39 +16,34 @@ These commands require no configuration
 
 ## Commands
 
-### `scaffold-extension` (alias `se`)
+### `addons-install` (alias `install`)
 
 This is the base command. This command without any sub-commands will simply print the usage information and documentation.
 
-### `scaffold-extension:list` (alias `se:list`)
+### `addons-install:list` (alias `install:list`)
 
-Lists available `scaffold_extension` jobs.
+Lists available  jobs.
 
-### `scaffold-extension:run <job>` (alias `se:run`)
+### `addons-install:run <job>` (alias `install:run`)
 
-Runs the specified `scaffold_extension` job.
+Runs the specified job.
 
 **Note:** Jobs will fail if a site is in SFTP mode _and_ there are outstanding changes that have not be committed to the Pantheon repository.
 
+<!-- TODO: add the flag support in a future release
 #### Flags
 
-* `--with-db`: If included, the `scaffold_extension` job will be run with a database connection.
-
+* `--skip-db`: If included, the job will be run without a database connection.
+-->
 ## Usage
-* `terminus scaffold-extension:list <site_id>.<env>`
-* `terminus scaffold-extension:run <site_id>.<env> <job> [--with-db]`
+* `terminus addons-install:list`
+* `terminus addons-install:run <site_id>.<env> <job> [--skip-db]`
 
 ## Installation
 
 To install this plugin using Terminus 3:
 ```
-terminus self:plugin:install terminus-scaffold-extension-plugin
-```
-
-On older versions of Terminus:
-```
-mkdir -p ~/.terminus/plugins
-curl https://github.com/pantheon-systems/terminus-scaffold-extension-plugin/archive/2.x.tar.gz -L | tar -C ~/.terminus/plugins -xvz
+terminus self:plugin:install terminus-addons-installer-plugin
 ```
 
 ## Testing
@@ -66,4 +61,4 @@ Note that prior to running the tests, you should first run:
 * `composer install-tools`
 
 ## Help
-Run `terminus help scaffold-extension` for help.
+Run `terminus help addons-install` for help.

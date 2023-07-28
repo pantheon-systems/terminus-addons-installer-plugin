@@ -15,16 +15,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Set up environment
-        run: ./.bin/set-up-globals.sh
       - name: Install Dependencies
         run: composer install
-      - name: Lint
-        run: composer lint
       - name: Unit Tests
         run: composer test
-      - name: Validate Terminus exists
-        run: terminus --version
   terminus-3:
     needs: unit
     runs-on: ubuntu-latest
@@ -32,17 +26,27 @@ jobs:
       image: quay.io/pantheon-public/terminus-plugin-test:4.x-php8.0
       options: --user root
     name: Terminus 3 Functional Tests
+    env:
+      TERMINUS_SITE: terminus-addons-installer-plugin
+      TERMINUS_TOKEN: ${{ secrets.TERMINUS_TOKEN }}
+      BUILD_NUM: ${{ github.run_number }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Install SSH key
+        uses: webfactory/ssh-agent@d4b9b8ff72958532804b70bbe600ad43b36d5f2e
+        with:
+          ssh-private-key: ${{ secrets.SSH_KEY }}
+          log-public-key: false
       - name: Set up environment
-        run: ./.bin/set-up-globals.sh
-      - name: Validate Terminus exists
-        run: terminus --version
+        run: ./.bin/setup.sh
       - name: Install plugin
         run: terminus self:plugin:install ${GITHUB_WORKSPACE}
       - name: Functional Tests
         run: composer functional
+      - name: Cleanup
+        if: always()
+        run: ./.bin/cleanup.sh
   code-style:
     runs-on: ubuntu-latest
     container:
@@ -52,8 +56,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Set up environment
-        run: ./.bin/set-up-globals.sh
       - name: Install Dependencies
         run: composer install
       - name: Code Style

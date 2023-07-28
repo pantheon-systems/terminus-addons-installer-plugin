@@ -1,10 +1,10 @@
 {
-    "name": "pantheon-systems/scaffold-extension",
-    "description": "An example Terminus command",
+    "name": "pantheon-systems/terminus-addons-installer-plugin",
+    "description": "Allows Terminus to trigger workflows on the platform that configure themes & plugins.",
     "type": "terminus-plugin",
     "license": "MIT",
     "autoload": {
-        "psr-4": { "Pantheon\\TerminusHello\\": "src" }
+        "psr-4": { "Pantheon\\TerminusScaffoldExtension\\": "src" }
     },
     "require-dev": {
         "phpunit/phpunit": "^9",
@@ -33,7 +33,7 @@
     },
     "extra": {
         "terminus": {
-            "compatible-version": "^1||^2||^3"
+            "compatible-version": "^3"
         }
     }
 }
