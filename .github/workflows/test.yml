@@ -39,7 +39,7 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_KEY }}
           log-public-key: false
       - name: Set up environment
-        run: ./.bin/set-up-globals.sh
+        run: ./.bin/setup.sh
       - name: Install plugin
         run: terminus self:plugin:install ${GITHUB_WORKSPACE}
       - name: Functional Tests
