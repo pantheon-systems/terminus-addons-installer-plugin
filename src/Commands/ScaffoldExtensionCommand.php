@@ -103,6 +103,9 @@ class ScaffoldExtensionCommand extends TerminusCommand implements SiteAwareInter
             return;
         }
 
+        // We should never get to this path, but if we do, that means the workflow failed to trigger. We'll link the user to the dashboard and instruct them to just try it again since we don't really know what happened.
+        $this->log()->error(sprintf('There was an error running the %1$s job on %2$s.%3$s. If you are seeing this message, you can check the workflows log in your Pantheon dashboard and try again: %4$s.', str_replace('_', '-', $job_name), $site_id, $site_env, $dashboard_url));
+        return 1;
     }
 
     /**
