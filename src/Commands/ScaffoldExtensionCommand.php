@@ -97,7 +97,7 @@ class ScaffoldExtensionCommand extends TerminusCommand implements SiteAwareInter
         $this->log()->notice(sprintf('Attempting to run the %1$s job on %2$s.%3$s...', str_replace('_', '-', $job_name), $site_id, $site_env));
 
         // Run the workflow and trigger a success message if it triggered successfully.
-        if ( $env->getWorkflows()->create('scaffold_extensions', compact('params')) ) {
+        if ($env->getWorkflows()->create('scaffold_extensions', compact('params'))) {
             $success_message = sprintf("The %s workflow has been started on %s.%s.\n You can see the workflow running on your dashboard: %s", str_replace('_', '-', $job_name), $site_id, $site_env, $dashboard_url);
             $this->log()->notice($success_message);
             return;
