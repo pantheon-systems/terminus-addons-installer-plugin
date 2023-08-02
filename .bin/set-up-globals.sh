@@ -35,5 +35,5 @@ else
 fi
 
 # Echo the newly created globals.
-echo "SITE_ENV is $SITE_ENV"
-echo "FS_TEST_ENV is $FS_TEST_ENV"
+echo "SITE_ENV: ${SITE_ENV}"
+echo "FS_TEST_ENV: ${FS_TEST_ENV}"
