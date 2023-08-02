@@ -1,6 +1,6 @@
 #!/usr/bin/env bats
 
-source ./bin/set-up-globals.sh
+source ./.bin/set-up-globals.sh
 
 #
 # confirm-install.bats
