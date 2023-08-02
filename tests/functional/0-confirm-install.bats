@@ -1,6 +1,6 @@
 #!/usr/bin/env bats
 
-load ./.bin/set-up-globals.sh
+load ${GITHUB_WORKSPACE}/.bin/set-up-globals.sh
 
 #
 # confirm-install.bats
