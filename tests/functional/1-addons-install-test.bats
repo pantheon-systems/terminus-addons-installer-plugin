@@ -1,6 +1,6 @@
 #!/usr/bin/env bats
 
-source ./.bin/set-up-globals.sh
+load ./.bin/set-up-globals.sh
 
 @test "run addons-install command" {
   run terminus addons-install
