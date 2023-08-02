@@ -1,6 +1,6 @@
 #!/usr/bin/env bats
 
-load ${GITHUB_WORKSPACE}/.bin/set-up-globals.sh
+load set-up-globals
 
 @test "run addons-install command" {
   run terminus addons-install
