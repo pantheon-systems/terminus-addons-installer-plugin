@@ -7,7 +7,6 @@ if [ -z "$TERMINUS_SITE" ]; then
   TERMINUS_SITE=terminus-addons-installer-plugin
 
   # Check if the localtests environment exists already, otherwise create it. This can be passed locally as an environment variable but defaults to localtests.
-
   if [ -z "$LOCALENV" ]; then
     LOCALENV=localtests
   fi
@@ -17,17 +16,17 @@ if [ -z "$TERMINUS_SITE" ]; then
     terminus multidev:create "$TERMINUS_SITE".dev "$LOCALENV"
   fi
   SITE_ENV="$TERMINUS_SITE"."$LOCALENV"
-  FS_TEST_ENV="$TERMINUS_SITE".fs-test
+  FS_TEST_ENV="$TERMINUS_SITE.fs-test"
 
   # If we're in a local run, let's create and set up the multidev early. On CI runs, we do this in set-up-globals.sh.
   # Create a new multidev just for this failure test
   terminus multidev:create "$TERMINUS_SITE".dev fs-test
 
   # Switch to SFTP mode.
-  terminus connection:set "$TERMINUS_SITE".fs-test sftp
+  terminus connection:set "$TERMINUS_SITE.fs-test" sftp
 
   # Install the Hello Dolly plugin.
-  terminus wp "$TERMINUS_SITE".fs-test -- plugin install hello-dolly
+  terminus wp "$TERMINUS_SITE.fs-test" -- plugin install hello-dolly
 else
   # Always use the multidev if in CI.
   SITE_ENV="${TERMINUS_SITE}.ci-${BUILD_NUM}"
