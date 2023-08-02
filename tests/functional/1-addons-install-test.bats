@@ -23,7 +23,7 @@ load ${GITHUB_WORKSPACE}/.bin/set-up-globals.sh
 }
 
 @test "run addons-install:run command" {
-  run terminus addons-install:run "$SITE_ENV" install_ocp
+  debug terminus addons-install:run "$SITE_ENV" install_ocp
   [[ $output == *"Attempting to run the install-ocp job"* ]]
   [ "$status" -eq 0 ]
 
@@ -41,7 +41,7 @@ load ${GITHUB_WORKSPACE}/.bin/set-up-globals.sh
 }
 
 @test "test failure states" {
-  run terminus install:run "$SITE_ENV"
+  debug terminus install:run "$SITE_ENV"
   [[ $output == *"Please provide a job ID"* ]]
   [ "$status" -eq 1 ]
 
@@ -68,7 +68,7 @@ load ${GITHUB_WORKSPACE}/.bin/set-up-globals.sh
 
 @test "test failure state if command is run with uncommitted filesystem changes" {
   # Run the install-ocp job on the fs-test environment we created earlier. We expect this to fail because we made changes to the filesystem.
-  run terminus install:run "$FS_TEST_ENV" install-ocp
+  debug terminus install:run "$FS_TEST_ENV" install-ocp
   [[ $output == *"Please commit or revert them before running this job."* ]]
   [ "$status" -eq 1 ]
 }
