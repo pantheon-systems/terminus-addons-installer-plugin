@@ -47,7 +47,7 @@ class ScaffoldExtensionCommand extends TerminusCommand implements SiteAwareInter
      * @param string $site_info
      * @param string $job_name
      */
-    public function runScaffoldExtensionsJob(string $site_info = '', $job_name = '')
+    public function runScaffoldExtensionsJob(string $site_info = '', $job_id = '')
     {
         if (empty($site_info)) {
             $this->log()->error('Please provide site information.');
@@ -68,12 +68,12 @@ class ScaffoldExtensionCommand extends TerminusCommand implements SiteAwareInter
             return 1;
         }
 
-        if (empty($job_name)) {
+        if (empty($job_id)) {
             $this->log()->error('Please provide a job ID.');
             return 1;
         }
 
-        $job_name = $this->validateJobName($job_name);
+        $job_name = $this->validateJobName($job_id);
         if (!Helpers\UtilityFunctions::jobExists($job_name)) {
             $this->log()->error(sprintf('The %1$s job does not exist.', $job_name));
             return 1;
@@ -123,12 +123,20 @@ class ScaffoldExtensionCommand extends TerminusCommand implements SiteAwareInter
     /**
      * Check job name. Allow underscores or dashes. Return only underscores.
      *
-     * @param string $job_name
+     * @param string $job_id
      * @return string
      */
-    public function validateJobName(string $job_name) : string
+    public function validateJobName(string $job_id) : string
     {
-        $job_name = str_replace('-', '_', $job_name);
-        return $job_name;
+        $jobs = Helpers\UtilityFunctions::availableJobs();
+        // Check if availableJobs contains the $job_id as an 'id' within the array.
+        // If it does, return the index.
+        foreach ($jobs as $index => $job) {
+            if ($job['id'] === $job_id) {
+                return $index;
+            }
+        }
+
+        return false;
     }
 }

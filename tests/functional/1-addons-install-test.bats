@@ -23,20 +23,12 @@ load ${GITHUB_WORKSPACE}/.bin/set-up-globals.sh
 }
 
 @test "run addons-install:run command" {
-  debug terminus addons-install:run "$SITE_ENV" install_ocp
-  [[ $output == *"Attempting to run the install-ocp job"* ]]
+  run terminus addons-install:run "$SITE_ENV" ocp
+  [[ $output == *"Attempting to run the ocp job"* ]]
   [ "$status" -eq 0 ]
 
-  run terminus install:run "$SITE_ENV" install_ocp
-  [[ $output == *"Attempting to run the install-ocp job"* ]]
-  [ "$status" -eq 0 ]
-
-  run terminus addons-install:run "$SITE_ENV" install-ocp
-  [[ $output == *"Attempting to run the install-ocp job"* ]]
-  [ "$status" -eq 0 ]
-
-  run terminus install:run "$SITE_ENV" install-ocp
-  [[ $output == *"Attempting to run the install-ocp job"* ]]
+  run terminus install:run "$SITE_ENV" ocp
+  [[ $output == *"Attempting to run the ocp job"* ]]
   [ "$status" -eq 0 ]
 }
 
@@ -57,18 +49,18 @@ load ${GITHUB_WORKSPACE}/.bin/set-up-globals.sh
   [[ $output == *"The bar job does not exist"* ]]
   [ "$status" -eq 1 ]
 
-  run terminus install:run "$TERMINUS_SITE".test install-ocp
-  [[ $output == *"You cannot run the install-ocp workflow in a test environment"* ]]
+  run terminus install:run "$TERMINUS_SITE".test ocp
+  [[ $output == *"You cannot run the ocp workflow in a test environment"* ]]
   [ "$status" -eq 1 ]
 
-  run terminus install:run "$TERMINUS_SITE".live install-ocp
-  [[ $output == *"You cannot run the install-ocp workflow in a live environment"* ]]
+  run terminus install:run "$TERMINUS_SITE".live ocp
+  [[ $output == *"You cannot run the ocp workflow in a live environment"* ]]
   [ "$status" -eq 1 ]
 }
 
 @test "test failure state if command is run with uncommitted filesystem changes" {
-  # Run the install-ocp job on the fs-test environment we created earlier. We expect this to fail because we made changes to the filesystem.
-  debug terminus install:run "$FS_TEST_ENV" install-ocp
+  # Run the ocp job on the fs-test environment we created earlier. We expect this to fail because we made changes to the filesystem.
+  debug terminus install:run "$FS_TEST_ENV" ocp
   [[ $output == *"Please commit or revert them before running this job."* ]]
   [ "$status" -eq 1 ]
 }
