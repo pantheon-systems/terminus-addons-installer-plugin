@@ -35,7 +35,3 @@ else
   SITE_ENV="${TERMINUS_SITE}.ci-${BUILD_NUM}"
   FS_TEST_ENV="${TERMINUS_SITE}.fs-test-${BUILD_NUM}"
 fi
-
-# Echo the newly created globals.
-echo "SITE_ENV: ${SITE_ENV}"
-echo "FS_TEST_ENV: ${FS_TEST_ENV}"

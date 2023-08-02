@@ -1,6 +1,11 @@
 #!/usr/bin/env bats
 
+echo "Running tests to confirm the install..."
+
 load ${GITHUB_WORKSPACE}/.bin/set-up-globals.sh
+# Echo the newly created globals.
+echo "SITE_ENV: ${SITE_ENV}"
+echo "FS_TEST_ENV: ${FS_TEST_ENV}"
 
 #
 # confirm-install.bats
