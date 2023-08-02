@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -ex
 
 # Trim the newline character from BUILD_NUM variable
 BUILD_NUM=$(echo "${BUILD_NUM}" | tr -d '\n')
