@@ -3,7 +3,7 @@ set -e
 
 # Check if TERMINUS_SITE is defined, otherwise define it as terminus-addons-installer-plugin.
 if [ -z "$TERMINUS_SITE" ]; then
-  # Looks like this is a local run. We'll create the localtests multidev ro test this.
+  # Looks like this is a local run. We'll create the localtests multidev to test this.
   TERMINUS_SITE=terminus-addons-installer-plugin
 
   # Check if the localtests environment exists already, otherwise create it. This can be passed locally as an environment variable but defaults to localtests.
@@ -14,7 +14,7 @@ if [ -z "$TERMINUS_SITE" ]; then
 
   output=$(terminus multidev:list "$TERMINUS_SITE" || true)
   if ! echo "$output" | grep -q "${LOCALENV}"; then
-    terminus multidev:create $TERMINUS_SITE.dev ${LOCALENV}
+    terminus multidev:create "$TERMINUS_SITE".dev "$LOCALENV"
   fi
   SITE_ENV="$TERMINUS_SITE"."$LOCALENV"
   FS_TEST_ENV="$TERMINUS_SITE".fs-test
@@ -30,8 +30,8 @@ if [ -z "$TERMINUS_SITE" ]; then
   terminus wp "$TERMINUS_SITE".fs-test -- plugin install hello-dolly
 else
   # Always use the multidev if in CI.
-  SITE_ENV="$TERMINUS_SITE".ci-"$BUILD_NUM"
-  FS_TEST_ENV="$TERMINUS_SITE".fs-test-"$BUILD_NUM"
+  SITE_ENV="${TERMINUS_SITE}.ci-${BUILD_NUM}"
+  FS_TEST_ENV="${TERMINUS_SITE}.fs-test-${BUILD_NUM}"
 fi
 
 # Echo the newly created globals.
