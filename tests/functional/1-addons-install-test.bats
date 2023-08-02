@@ -67,11 +67,6 @@ source .bin/set-up-globals.sh
 }
 
 @test "test failure state if command is run with uncommitted filesystem changes" {
-  # Check if the $FS_TEST_ENV environment exists already. If it does not, skip these tests.
-  output=$(terminus multidev:list "$TERMINUS_SITE" || true)
-  if ! echo "$output" | grep -q "${FS_TEST_ENV}"; then
-    skip "The $FS_TEST_ENV environment does not exist. Skipping tests."
-  fi
   # Run the install-ocp job on the fs-test environment we created earlier. We expect this to fail because we made changes to the filesystem.
   run terminus install:run "$FS_TEST_ENV" install-ocp
   [[ $output == *"Please commit or revert them before running this job."* ]]
