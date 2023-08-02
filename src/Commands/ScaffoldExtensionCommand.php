@@ -61,6 +61,7 @@ class ScaffoldExtensionCommand extends TerminusCommand implements SiteAwareInter
         $site_env = $site_arr['env'];
         $site = $this->getSite($site_id);
         $env = $site->getEnvironments()->get($site_env);
+        $dashboard_url = $this->getSiteById($site_id)->dashboardUrl();
 
         if (in_array($site_env, ['test', 'live'])) {
             $this->log()->error(sprintf('You cannot run the %1$s workflow in a %2$s environment. You must use dev or a multidev environment.', $job_name, $site_env));
