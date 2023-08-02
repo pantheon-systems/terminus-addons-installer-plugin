@@ -4,10 +4,6 @@ load ${GITHUB_WORKSPACE}/.bin/set-up-globals.sh
 
 echo "Running functional tests..."
 
-# Echo the newly created globals.
-echo "SITE_ENV: ${SITE_ENV}"
-echo "FS_TEST_ENV: ${FS_TEST_ENV}"
-
 @test "run addons-install command" {
   run terminus addons-install
   [[ $output == *"terminus addons-install"* ]]
