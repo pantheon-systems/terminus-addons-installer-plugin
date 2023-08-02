@@ -15,8 +15,8 @@ if [ -z "$TERMINUS_SITE" ]; then
   if ! echo "$output" | grep -q "${LOCALENV}"; then
     terminus multidev:create "$TERMINUS_SITE".dev "$LOCALENV"
   fi
-  SITE_ENV="$TERMINUS_SITE.$LOCALENV"
-  FS_TEST_ENV="$TERMINUS_SITE.fs-test"
+  SITE_ENV="${TERMINUS_SITE}.${LOCALENV}"
+  FS_TEST_ENV="${TERMINUS_SITE}.fs-test"
 
   # If we're in a local run, let's create and set up the multidev early. On CI runs, we do this in set-up-globals.sh.
   # Create a new multidev just for this failure test
@@ -34,5 +34,5 @@ else
 fi
 
 # Echo the newly created globals.
-echo "SITE_ENV: '${SITE_ENV}'"
-echo "FS_TEST_ENV: '${FS_TEST_ENV}'"
+echo "SITE_ENV: ${SITE_ENV}"
+echo "FS_TEST_ENV: ${FS_TEST_ENV}"
