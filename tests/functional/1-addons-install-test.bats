@@ -2,8 +2,6 @@
 
 load ${GITHUB_WORKSPACE}/.bin/set-up-globals.sh
 
-echo "Running functional tests..."
-
 @test "run addons-install command" {
   run terminus addons-install
   [[ $output == *"terminus addons-install"* ]]

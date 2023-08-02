@@ -1,7 +1,5 @@
 #!/usr/bin/env bats
 
-echo "Running tests to confirm the install..."
-
 load ${GITHUB_WORKSPACE}/.bin/set-up-globals.sh
 
 #
