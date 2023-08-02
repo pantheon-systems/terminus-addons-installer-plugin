@@ -1,5 +1,5 @@
 #!/bin/bash
-set -ex
+set -e
 
 # Trim the newline character from BUILD_NUM variable
 BUILD_NUM=$(echo "${BUILD_NUM}" | tr -d '\n')
@@ -35,3 +35,7 @@ else
   SITE_ENV="${TERMINUS_SITE}.ci-${BUILD_NUM}"
   FS_TEST_ENV="${TERMINUS_SITE}.fs-test-${BUILD_NUM}"
 fi
+
+debug() {
+  (set -x; run "$@"; set +x)
+}
