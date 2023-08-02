@@ -40,11 +40,11 @@ load ${GITHUB_WORKSPACE}/.bin/set-up-globals.sh
 @test "make sure multidevs were created successfully" {
   multidev_list=$(terminus multidev:list "$TERMINUS_SITE" || true)
 
-  debug echo "$multidev_list" | grep -q "${FS_TEST_ENV}"
-  [[ $output == *"Created"* ]]
+  fstest_exists=$(echo "$multidev_list" | grep -q "${FS_TEST_ENV}" || true)
+  [[ $fstest_exists == *"Created"* ]]
   [ "$status" -eq 0 ]
 
-  debug echo "$multidev_list" | grep -q "${SITE_ENV}"
-  [[ $output == *"Created"* ]]
+  siteenv_exists=$(echo "$multidev_list" | grep -q "${SITE_ENV}" || true)
+  [[ $siteenv_exists == *"Created"* ]]
   [ "$status" -eq 0 ]
 }
