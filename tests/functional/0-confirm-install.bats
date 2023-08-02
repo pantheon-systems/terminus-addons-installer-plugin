@@ -11,8 +11,8 @@ load ${GITHUB_WORKSPACE}/.bin/set-up-globals.sh
 #
 
 @test "check globals" {
-  echo "SITE_ENV: ${SITE_ENV}"
-  echo "FS_TEST_ENV: ${FS_TEST_ENV}"
+  echo "SITE_ENV: '${SITE_ENV}'"
+  echo "FS_TEST_ENV: '${FS_TEST_ENV}'"
 }
 
 @test "confirm terminus version" {
