@@ -15,7 +15,7 @@ if [ -z "$TERMINUS_SITE" ]; then
   if ! echo "$output" | grep -q "${LOCALENV}"; then
     terminus multidev:create "$TERMINUS_SITE".dev "$LOCALENV"
   fi
-  SITE_ENV="$TERMINUS_SITE"."$LOCALENV"
+  SITE_ENV="$TERMINUS_SITE.$LOCALENV"
   FS_TEST_ENV="$TERMINUS_SITE.fs-test"
 
   # If we're in a local run, let's create and set up the multidev early. On CI runs, we do this in set-up-globals.sh.
@@ -23,10 +23,10 @@ if [ -z "$TERMINUS_SITE" ]; then
   terminus multidev:create "$TERMINUS_SITE".dev fs-test
 
   # Switch to SFTP mode.
-  terminus connection:set "$TERMINUS_SITE.fs-test" sftp
+  terminus connection:set "$FS_TEST_ENV" sftp
 
   # Install the Hello Dolly plugin.
-  terminus wp "$TERMINUS_SITE.fs-test" -- plugin install hello-dolly
+  terminus wp "$FS_TEST_ENV" -- plugin install hello-dolly
 else
   # Always use the multidev if in CI.
   SITE_ENV="${TERMINUS_SITE}.ci-${BUILD_NUM}"
@@ -34,5 +34,5 @@ else
 fi
 
 # Echo the newly created globals.
-echo "SITE_ENV: ${SITE_ENV}"
-echo "FS_TEST_ENV: ${FS_TEST_ENV}"
+echo "SITE_ENV: '${SITE_ENV}'"
+echo "FS_TEST_ENV: '${FS_TEST_ENV}'"
