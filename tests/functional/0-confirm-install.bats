@@ -13,6 +13,8 @@ load ${GITHUB_WORKSPACE}/.bin/set-up-globals.sh
 @test "check globals" {
   echo "SITE_ENV: '${SITE_ENV}'"
   echo "FS_TEST_ENV: '${FS_TEST_ENV}'"
+  # Add dummy assertion (true) to make it a valid Bats test
+  true
 }
 
 @test "confirm terminus version" {
