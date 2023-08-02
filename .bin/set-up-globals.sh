@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 
+# Trim the newline character from BUILD_NUM variable
+BUILD_NUM=$(echo "${BUILD_NUM}" | tr -d '\n')
+
 # Check if TERMINUS_SITE is defined, otherwise define it as terminus-addons-installer-plugin.
 if [ -z "$TERMINUS_SITE" ]; then
   # Looks like this is a local run. We'll create the localtests multidev to test this.
