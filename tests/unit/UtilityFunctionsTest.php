@@ -56,18 +56,17 @@ class UtilityFunctionsTest extends TestCase
      *
      * @dataProvider jobExistsDataProvider
      */
-    public function testJobExists($jobs)
+    public function testJobExists($expected)
     {
-        foreach ($jobs as $job) {
-            if ( $job['id'] === 'not-a-job' ) {
-                $this->assertFalse(UtilityFunctions::jobExists('not-a-job'));
-            }
-            $job_id = $job['id'];
-            $job_description = $job['description'];
-            $this->assertTrue(UtilityFunctions::jobExists($job));
-            $this->assertIsString($job_id);
-            $this->assertIsString($job_description);
+        $job_id = $expected['id'];
+        $job_description = $expected['description'];
+        if (array_key_exists('failure', $expected)) {
+            $this->assertFalse(UtilityFunctions::jobExists($job_id));
+            return;
         }
+        $this->assertTrue(UtilityFunctions::jobExists($job_id));
+        $this->assertIsString($job_id);
+        $this->assertIsString($job_description);
     }
 
     /**
