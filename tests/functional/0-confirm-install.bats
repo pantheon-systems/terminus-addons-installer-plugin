@@ -50,12 +50,12 @@ debug() {
   multidev_list=$(terminus multidev:list "$TERMINUS_SITE" || true)
 
   fstest_exists=$(echo "$multidev_list" | grep -q "${FS_TEST_ENV}" || true)
-  debug echo fstest_exists
+  run echo $fstest_exists
   [[ $output == *"Created"* ]]
   [ $status -eq 0 ]
 
   siteenv_exists=$(echo "$multidev_list" | grep -q "${SITE_ENV}" || true)
-  run echo siteenv_exists
+  run echo $siteenv_exists
   [[ $output == *"Created"* ]]
   [ $status -eq 0 ]
 }
