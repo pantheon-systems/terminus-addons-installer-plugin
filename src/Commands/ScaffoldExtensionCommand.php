@@ -94,17 +94,17 @@ class ScaffoldExtensionCommand extends TerminusCommand implements SiteAwareInter
             'with_db' => $with_db, // Todo: This will be a flag in a later iteration.
         ];
 
-        $this->log()->notice(sprintf('Attempting to run the %1$s job on %2$s.%3$s...', str_replace('_', '-', $job_name), $site_id, $site_env));
+        $this->log()->notice(sprintf('Attempting to run the %1$s job on %2$s.%3$s...', $job_id, $site_id, $site_env));
 
         // Run the workflow and trigger a success message if it triggered successfully.
         if ($env->getWorkflows()->create('scaffold_extensions', compact('params'))) {
-            $success_message = sprintf("The %s workflow has been started on %s.%s.\n You can see the workflow running on your dashboard: %s", str_replace('_', '-', $job_name), $site_id, $site_env, $dashboard_url);
+            $success_message = sprintf("The %s workflow has been started on %s.%s.\n You can see the workflow running on your dashboard: %s", $job_id, $site_id, $site_env, $dashboard_url);
             $this->log()->notice($success_message);
             return;
         }
 
         // We should never get to this path, but if we do, that means the workflow failed to trigger. We'll link the user to the dashboard and instruct them to just try it again since we don't really know what happened.
-        $this->log()->error(sprintf('There was an error running the %1$s job on %2$s.%3$s. If you are seeing this message, you can check the workflows log in your Pantheon dashboard and try again: %4$s.', str_replace('_', '-', $job_name), $site_id, $site_env, $dashboard_url));
+        $this->log()->error(sprintf('There was an error running the %1$s job on %2$s.%3$s. If you are seeing this message, you can check the workflows log in your Pantheon dashboard and try again: %4$s.', $job_id, $site_id, $site_env, $dashboard_url));
         return 1;
     }
 
