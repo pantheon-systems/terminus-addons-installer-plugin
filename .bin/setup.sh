@@ -3,6 +3,9 @@ set -e
 
 TERMINUS_PLUGINS_DIR=.. terminus list -n remote
 
+# Update Terminus to the latest version.
+terminus self:update
+
 # Set the fs-test number. If the build number is > 999, we need to trim the -test- out of the middle.
 if [ "$BUILD_NUM" -gt 999 ]; then
 	FS_TEST="fs-${BUILD_NUM}"
