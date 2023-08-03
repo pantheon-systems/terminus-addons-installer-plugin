@@ -7,7 +7,7 @@ echo "Source path: $source_path"
 
 if [ -f "$source_path" ]; then
     echo "Sourcing $source_path"
-    source "$source_path"
+    . "$source_path"
 else
     echo "ERROR: File not found at $source_path"
     exit 1
