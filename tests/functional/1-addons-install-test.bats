@@ -62,7 +62,7 @@ debug() {
 
 @test "test failure state if command is run with uncommitted filesystem changes" {
   # Run the ocp job on the fs-test environment we created earlier. We expect this to fail because we made changes to the filesystem.
-  debug terminus install:run "$FS_TEST_ENV" ocp
+  run terminus install:run "$FS_TEST_ENV" ocp
   [[ $output == *"Please commit or revert them before running this job."* ]]
   [ "$status" -eq 1 ]
 }
