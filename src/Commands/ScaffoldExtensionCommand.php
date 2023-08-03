@@ -137,6 +137,6 @@ class ScaffoldExtensionCommand extends TerminusCommand implements SiteAwareInter
             }
         }
 
-        return false;
+        return $job_id;
     }
 }
