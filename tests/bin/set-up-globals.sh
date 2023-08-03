@@ -43,6 +43,13 @@ install_hello_dolly() {
   fi
 }
 
+# Helper function to turn debug mode on for tests.
+# Usage: debug <command to test> <args>
+# Example: debug terminus install:run "$SITE_ENV" ocp
+debug() {
+  (set -x; run "$@"; set +x)
+}
+
 # Check if TERMINUS_SITE is defined, otherwise define it as terminus-addons-installer-plugin.
 if [ -z "$TERMINUS_SITE" ]; then
   # Looks like this is a local run. We'll create the localtests multidev to test this.
