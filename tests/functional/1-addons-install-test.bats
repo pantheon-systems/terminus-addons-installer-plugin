@@ -35,7 +35,7 @@ debug() {
 }
 
 @test "test failure states" {
-  debug terminus install:run "$SITE_ENV"
+  run terminus install:run "$SITE_ENV"
   [[ $output == *"Please provide a job ID"* ]]
   [ "$status" -eq 1 ]
 
