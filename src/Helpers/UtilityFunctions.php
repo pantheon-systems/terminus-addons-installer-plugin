@@ -72,7 +72,7 @@ class UtilityFunctions
     }
 
     /**
-     * Returns an array of available jobs.
+     * A list of available jobs.
      *
      * @return string
      */
@@ -81,9 +81,25 @@ class UtilityFunctions
         return [
             'install_ocp' => [
                 'id' => 'ocp',
-                'description' => 'ocp: Installs Object Cache Pro',
+                'description' => 'Installs Object Cache Pro',
             ],
         ];
+    }
+
+    /**
+     * Returns the list of available jobs.
+     * Used by the addons-install:list command.
+     *
+     * @return array
+     */
+    public static function listJobs() : array
+    {
+        $jobs = self::availableJobs();
+        $output = [];
+        foreach ($jobs as $job) {
+            $output[] = $job['id'] . ': ' . $job['description'];
+        }
+        return $output;
     }
 
     /**
