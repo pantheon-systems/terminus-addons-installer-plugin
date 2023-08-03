@@ -43,10 +43,12 @@
   multidev_list=$(terminus multidev:list "$TERMINUS_SITE" || true)
 
   fstest_exists=$(echo "$multidev_list" | grep -q "${FS_TEST_ENV}" || true)
-  [[ $fstest_exists == *"Created"* ]]
-  [ "$status" -eq 0 ]
+  run echo fstest_exists
+  [[ $output == *"Created"* ]]
+  [ $status -eq 0 ]
 
   siteenv_exists=$(echo "$multidev_list" | grep -q "${SITE_ENV}" || true)
-  [[ $siteenv_exists == *"Created"* ]]
-  [ "$status" -eq 0 ]
+  run echo siteenv_exists
+  [[ $output == *"Created"* ]]
+  [ $status -eq 0 ]
 }
