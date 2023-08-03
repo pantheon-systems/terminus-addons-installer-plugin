@@ -1,7 +1,5 @@
 #!/usr/bin/env bats
 
-load set-up-globals
-
 #
 # confirm-install.bats
 #
@@ -9,10 +7,14 @@ load set-up-globals
 #
 
 @test "check globals" {
-  echo "SITE_ENV: '${SITE_ENV}'"
-  echo "FS_TEST_ENV: '${FS_TEST_ENV}'"
-  # Add dummy assertion (true) to make it a valid Bats test
-  true
+  run echo "TERMINUS_SITE: ${TERMINUS_SITE}"
+  [[ $output == *"TERMINUS_SITE: ${TERMINUS_SITE}"* ]]
+
+  run echo "SITE_ENV: ${SITE_ENV}"
+  [[ $output == *"SITE_ENV: ${SITE_ENV}"* ]]
+
+  run echo "FS_TEST_ENV: ${FS_TEST_ENV}"
+  [[ $output == *"FS_TEST_ENV: ${FS_TEST_ENV}"* ]]
 }
 
 @test "confirm terminus version" {
