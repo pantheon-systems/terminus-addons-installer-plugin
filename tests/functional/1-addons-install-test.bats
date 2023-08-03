@@ -31,6 +31,7 @@ debug() {
   command="terminus install:run ${SITE_ENV} ocp"
   echo "$command"
   run $command
+  echo $output
   [[ $output == *"Attempting to run the ocp job"* ]]
   [ "$status" -eq 0 ]
 
