@@ -61,10 +61,17 @@ class ScaffoldExtensionCommand extends TerminusCommand implements SiteAwareInter
         $site_env = $site_arr['env'];
         $site = $this->getSite($site_id);
         $env = $site->getEnvironments()->get($site_env);
+
+        // Bail if getSiteById doesn't exist.
+        if (! method_exists($this, 'getSiteByID')) {
+            $this->log()->error('This command requires Terminus 3.2.0 or later. You appear to be running an earlier version of Terminus. Please update Terminus with terminus self:update and try again.');
+            return 1;
+        }
+
         $dashboard_url = $this->getSiteById($site_id)->dashboardUrl();
 
         if (in_array($site_env, ['test', 'live'])) {
-            $this->log()->error(sprintf('You cannot run the %1$s workflow in a %2$s environment. You must use dev or a multidev environment.', $job_name, $site_env));
+            $this->log()->error(sprintf('You cannot run the %1$s workflow in a %2$s environment. You must use dev or a multidev environment.', $job_id, $site_env));
             return 1;
         }
 
