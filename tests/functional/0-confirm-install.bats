@@ -1,5 +1,12 @@
 #!/usr/bin/env bats
 
+# Helper function to turn debug mode on for tests.
+# Usage: debug <command to test> <args>
+# Example: debug terminus install:run "$SITE_ENV" ocp
+debug() {
+  (set -x; run "$@"; set +x)
+}
+
 #
 # confirm-install.bats
 #
