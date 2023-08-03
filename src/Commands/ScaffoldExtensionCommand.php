@@ -117,7 +117,7 @@ class ScaffoldExtensionCommand extends TerminusCommand implements SiteAwareInter
     public function listJobs()
     {
         $this->log()->notice('Listing available jobs...');
-        return Helpers\UtilityFunctions::availableJobs();
+        return Helpers\UtilityFunctions::listJobs();
     }
 
     /**
