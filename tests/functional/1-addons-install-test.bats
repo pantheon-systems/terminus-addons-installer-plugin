@@ -28,6 +28,7 @@ debug() {
 }
 
 @test "run addons-install:run command" {
+  echo "SITE_ENV: ${SITE_ENV}"
   run terminus addons-install:run "$SITE_ENV" ocp
   [[ $output == *"Attempting to run the ocp job"* ]]
   [ "$status" -eq 0 ]
