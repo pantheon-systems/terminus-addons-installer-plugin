@@ -64,7 +64,7 @@ class ScaffoldExtensionCommand extends TerminusCommand implements SiteAwareInter
 
         // Bail if getSiteById doesn't exist.
         if (! method_exists($this, 'getSiteByID')) {
-            $this->log()->error('This command requires Terminus 3.2.0 or later. You appear to be running an earlier version of Terminus. Please update Terminus with terminus self:update and try again.');
+            $this->log()->error('This command requires Terminus 3.2.0 or later. You appear to be running an earlier version of Terminus. Please update Terminus and try again.');
             return 1;
         }
 
