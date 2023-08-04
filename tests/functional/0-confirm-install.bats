@@ -1,10 +1,28 @@
 #!/usr/bin/env bats
 
+# Helper function to turn debug mode on for tests.
+# Usage: debug <command to test> <args>
+# Example: debug terminus install:run "$SITE_ENV" ocp
+debug() {
+  (set -x; run "$@"; set +x)
+}
+
 #
 # confirm-install.bats
 #
 # Ensure that Terminus and the Composer plugin have been installed correctly
 #
+
+@test "check globals" {
+  run echo "TERMINUS_SITE: ${TERMINUS_SITE}"
+  [[ $output == *"TERMINUS_SITE: ${TERMINUS_SITE}"* ]]
+
+  run echo "SITE_ENV: ${SITE_ENV}"
+  [[ $output == *"SITE_ENV: ${SITE_ENV}"* ]]
+
+  run echo "FS_TEST_ENV: ${FS_TEST_ENV}"
+  [[ $output == *"FS_TEST_ENV: ${FS_TEST_ENV}"* ]]
+}
 
 @test "confirm terminus version" {
   terminus --version

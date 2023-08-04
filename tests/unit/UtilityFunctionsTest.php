@@ -53,13 +53,59 @@ class UtilityFunctionsTest extends TestCase
 
     /**
      * Test the jobExists function.
+     *
+     * @dataProvider jobExistsDataProvider
      */
-    public function testJobExists()
+    public function testJobExists($expected)
+    {
+        foreach ( $expected as $test => $data ) {
+            if ( $test === 'failure' ) {
+                $this->assertFalse(UtilityFunctions::jobExists($data['id']));
+            } else {
+                $this->assertTrue(UtilityFunctions::jobExists($test));
+                $this->assertIsString($data['id']);
+                $this->assertIsString($data['description']);
+            }
+        }
+    }
+
+    /**
+     * Data provider for testJobExists().
+     *
+     */
+    public function jobExistsDataProvider()
     {
         $available_jobs = UtilityFunctions::availableJobs();
-        foreach ($available_jobs as $job_name => $job_description) {
-            $this->assertTrue(UtilityFunctions::jobExists($job_name));
-        }
-        $this->assertFalse(UtilityFunctions::jobExists('not-a-job'));
+        return [
+            [ array_merge( $available_jobs, [
+                'failure' => [
+                    'id' => 'not-a-job',
+                    'description' => '',
+                ],
+            ] ) ],
+        ];
+    }
+
+    /**
+     * Test the listJobs function.
+     *
+     * @dataProvider listJobsDataProvider
+     */
+    public function testListJobs($expected)
+    {
+        $result = UtilityFunctions::listJobs();
+        $this->assertIsArray($result);
+        $this->assertContains($expected, $result);
+
+    }
+
+    /**
+     * Data provider for testListJobs().
+     */
+    public function listJobsDataProvider()
+    {
+        return [
+            ['ocp: Installs Object Cache Pro'],
+        ];
     }
 }

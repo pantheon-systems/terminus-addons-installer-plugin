@@ -45,9 +45,9 @@ class ScaffoldExtensionCommand extends TerminusCommand implements SiteAwareInter
      * @aliases install:run
      *
      * @param string $site_info
-     * @param string $job_name
+     * @param string $job_id
      */
-    public function runScaffoldExtensionsJob(string $site_info = '', $job_name = '')
+    public function runScaffoldExtensionsJob(string $site_info = '', string $job_id = '')
     {
         if (empty($site_info)) {
             $this->log()->error('Please provide site information.');
@@ -62,17 +62,25 @@ class ScaffoldExtensionCommand extends TerminusCommand implements SiteAwareInter
         $site = $this->getSite($site_id);
         $env = $site->getEnvironments()->get($site_env);
 
-        if (in_array($site_env, ['test', 'live'])) {
-            $this->log()->error(sprintf('You cannot run the %1$s workflow in a %2$s environment. You must use dev or a multidev environment.', $job_name, $site_env));
+        // Bail if getSiteById doesn't exist.
+        if (! method_exists($this, 'getSiteByID')) {
+            $this->log()->error('This command requires Terminus 3.2.0 or later. You appear to be running an earlier version of Terminus. Please update Terminus and try again.');
             return 1;
         }
 
-        if (empty($job_name)) {
+        $dashboard_url = $this->getSiteById($site_id)->dashboardUrl();
+
+        if (in_array($site_env, ['test', 'live'])) {
+            $this->log()->error(sprintf('You cannot run the %1$s workflow in a %2$s environment. You must use dev or a multidev environment.', $job_id, $site_env));
+            return 1;
+        }
+
+        if (empty($job_id)) {
             $this->log()->error('Please provide a job ID.');
             return 1;
         }
 
-        $job_name = $this->validateJobName($job_name);
+        $job_name = $this->validateJobName($job_id);
         if (!Helpers\UtilityFunctions::jobExists($job_name)) {
             $this->log()->error(sprintf('The %1$s job does not exist.', $job_name));
             return 1;
@@ -93,9 +101,18 @@ class ScaffoldExtensionCommand extends TerminusCommand implements SiteAwareInter
             'with_db' => $with_db, // Todo: This will be a flag in a later iteration.
         ];
 
-        $this->log()->notice(sprintf('Attempting to run the %1$s job on %2$s.%3$s...', str_replace('_', '-', $job_name), $site_id, $site_env));
+        $this->log()->notice(sprintf('Attempting to run the %1$s job on %2$s.%3$s...', $job_id, $site_id, $site_env));
 
-        return $env->getWorkflows()->create('scaffold_extensions', compact('params'));
+        // Run the workflow and trigger a success message if it triggered successfully.
+        if ($env->getWorkflows()->create('scaffold_extensions', compact('params'))) {
+            $success_message = sprintf("The %s workflow has been started on %s.%s.\n You can see the workflow running on your dashboard: %s", $job_id, $site_id, $site_env, $dashboard_url);
+            $this->log()->notice($success_message);
+            return;
+        }
+
+        // We should never get to this path, but if we do, that means the workflow failed to trigger. We'll link the user to the dashboard and instruct them to just try it again since we don't really know what happened.
+        $this->log()->error(sprintf('There was an error running the %1$s job on %2$s.%3$s. If you are seeing this message, you can check the workflows log in your Pantheon dashboard and try again: %4$s.', $job_id, $site_id, $site_env, $dashboard_url));
+        return 1;
     }
 
     /**
@@ -107,18 +124,26 @@ class ScaffoldExtensionCommand extends TerminusCommand implements SiteAwareInter
     public function listJobs()
     {
         $this->log()->notice('Listing available jobs...');
-        return Helpers\UtilityFunctions::availableJobs();
+        return Helpers\UtilityFunctions::listJobs();
     }
 
     /**
      * Check job name. Allow underscores or dashes. Return only underscores.
      *
-     * @param string $job_name
+     * @param string $job_id
      * @return string
      */
-    public function validateJobName(string $job_name) : string
+    public function validateJobName(string $job_id) : string
     {
-        $job_name = str_replace('-', '_', $job_name);
-        return $job_name;
+        $jobs = Helpers\UtilityFunctions::availableJobs();
+        // Check if availableJobs contains the $job_id as an 'id' within the array.
+        // If it does, return the index.
+        foreach ($jobs as $index => $job) {
+            if ($job['id'] === $job_id) {
+                return $index;
+            }
+        }
+
+        return $job_id;
     }
 }

@@ -41,7 +41,9 @@ jobs:
       - name: Set up environment
         run: ./.bin/setup.sh
       - name: Install plugin
-        run: terminus self:plugin:install ${GITHUB_WORKSPACE}
+        run: |
+          terminus self:plugin:install ${GITHUB_WORKSPACE}
+          composer install
       - name: Functional Tests
         run: composer functional
       - name: Cleanup
