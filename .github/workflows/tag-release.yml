@@ -11,6 +11,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout @v3
       - name: Tag & Release
-        uses: pantheon-systems/action-autotag@v0.x
+        uses: pantheon-systems/action-autotag@v0.1
         with:
           gh-token: ${{ github.token }}
