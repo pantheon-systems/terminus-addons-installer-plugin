@@ -2,16 +2,11 @@
 set -e
 
 TERMINUS_PLUGINS_DIR=.. terminus list -n remote
+PHP_VERSION=$(echo "$PHP_VERSION" | tr -d '.')
+FS_TEST="fs-${BUILD_NUM}-${PHP_VERSION}"
 
 # Update Terminus to the latest version.
 terminus self:update
-
-# Set the fs-test number. If the build number is > 999, we need to trim the -test- out of the middle.
-if [ "$BUILD_NUM" -gt 999 ]; then
-	FS_TEST="fs-${BUILD_NUM}"
-else
-	FS_TEST="fs-test-${BUILD_NUM}"
-fi
 
 echo "Logging in with a machine token:"
 terminus auth:login -n --machine-token="$TERMINUS_TOKEN"
