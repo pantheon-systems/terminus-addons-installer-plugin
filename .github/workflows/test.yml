@@ -60,6 +60,8 @@ jobs:
             composer update
           fi
           composer install
+      - name: Install BATS
+        uses: mig4/setup-bats@v1
       - name: Functional Tests
         run: composer functional
       - name: Cleanup
