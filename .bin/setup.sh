@@ -4,6 +4,7 @@ set -e
 echo "Running PHP $PHP_VERSION tests..."
 
 TERMINUS_PLUGINS_DIR=.. terminus list -n remote
+PHP_VER="$PHP_VERSION"
 PHP_VERSION=$(echo "$PHP_VERSION" | tr -d '.')
 FS_TEST="fs-${BUILD_NUM}-${PHP_VERSION}"
 CI_TEST="ci-${BUILD_NUM}-${PHP_VERSION}"
@@ -39,5 +40,7 @@ echo "Editing the ~/.ssh/config file"
 	echo "  LogLevel ERROR"
 	echo "  UserKnownHostsFile /dev/null"
 } >> ~/.ssh/config
+
+echo "When PHP 8.3 is available on the platform, we will update the pantheon.yml to set the multidev environment to $PHP_VER to validate that the command runs on the platform with the approprate PHP version. For now, we're only running the command on whatever PHP version the fixture site is running."
 
 terminus wp "$TERMINUS_SITE"."$FS_TEST" -- plugin install hello-dolly
