@@ -32,8 +32,8 @@ if [ ! -f ~/.ssh/config ]; then
 	chmod 600 ~/.ssh/config
 fi
 
+echo "Editing the ~/.ssh/config file"
 {
-	echo "Editing the ~/.ssh/config file"
 	echo "Host *"
 	echo "  StrictHostKeyChecking no"
 	echo "  LogLevel ERROR"
