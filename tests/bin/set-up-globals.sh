@@ -71,17 +71,11 @@ if [ -z "$TERMINUS_SITE" ]; then
   switch_to_sftp_mode "$FS_TEST_ENV"
   install_hello_dolly "$FS_TEST_ENV"
 else
-  # If FS_TEST is defined, set FS_TEST_ENV.
-  if [ -n "$FS_TEST" ]; then
-    FS_TEST_ENV="${TERMINUS_SITE}.${FS_TEST}"
+  if [ -n "$PHP_VERSION" ]; then
+    FS_TEST_ENV="${TERMINUS_SITE}.fs-${BUILD_NUM}-${PHP_VERSION}"
+    SITE_ENV="${TERMINUS_SITE}.ci-${BUILD_NUM}-${PHP_VERSION}"
   else
     FS_TEST_ENV="${TERMINUS_SITE}.fs-test-${BUILD_NUM}"
-  fi
-
-  # If CI_TEST is defined, set SITE_ENV.
-  if [ -n "$CI_TEST" ]; then
-    SITE_ENV="${TERMINUS_SITE}.${CI_TEST}"
-  else
     SITE_ENV="${TERMINUS_SITE}.ci-${BUILD_NUM}"
   fi
 
