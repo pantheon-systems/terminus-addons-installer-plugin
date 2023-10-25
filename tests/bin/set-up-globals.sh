@@ -3,6 +3,7 @@ set -e
 
 # Trim the newline character from BUILD_NUM variable
 BUILD_NUM=$(echo "${BUILD_NUM}" | tr -d '\n')
+PHP_VERSION=$(echo "${PHP_VERSION}" | tr -d '.')
 
 create_multidev() {
   local site="$1"
