@@ -50,15 +50,19 @@ jobs:
         if: always()
         run: ./.bin/cleanup.sh
   code-style:
-    runs-on: ubuntu-latest
-    container:
-      image: quay.io/pantheon-public/terminus-plugin-test:4.x-php8.2
-      options: --user root
     name: Code Style
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php: [7.4, 8.3]
     steps:
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
       - name: Checkout
         uses: actions/checkout@v2
       - name: Install Dependencies
         run: composer install
       - name: Code Style
-        run: composer cs
+        run: composer lint
