@@ -4,6 +4,7 @@ set -e
 TERMINUS_PLUGINS_DIR=.. terminus list -n remote
 PHP_VERSION=$(echo "$PHP_VERSION" | tr -d '.')
 FS_TEST="fs-${BUILD_NUM}-${PHP_VERSION}"
+CI_TEST="ci-${BUILD_NUM}-${PHP_VERSION}"
 
 # Update Terminus to the latest version.
 terminus self:update
@@ -11,8 +12,8 @@ terminus self:update
 echo "Logging in with a machine token:"
 terminus auth:login -n --machine-token="$TERMINUS_TOKEN"
 terminus whoami
-terminus multidev:create "$TERMINUS_SITE".dev ci-"$BUILD_NUM"
-terminus connection:set "$TERMINUS_SITE".ci-"$BUILD_NUM" git
+terminus multidev:create "$TERMINUS_SITE".dev "$CI_TEST"
+terminus connection:set "$TERMINUS_SITE"."$CI_TEST" git
 # Set up the environment for filesystem tests.
 terminus multidev:create "$TERMINUS_SITE".dev "$FS_TEST"
 terminus connection:set "$TERMINUS_SITE"."$FS_TEST" sftp
