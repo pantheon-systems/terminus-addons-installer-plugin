@@ -22,9 +22,9 @@ jobs:
   terminus-3:
     needs: unit
     runs-on: ubuntu-latest
-    container:
-      image: quay.io/pantheon-public/terminus-plugin-test:4.x-php8.0
-      options: --user root
+    strategy:
+      matrix:
+        php: [7.4, 8.3]
     name: Terminus 3 Functional Tests
     env:
       TERMINUS_SITE: terminus-addons-installer-plugin
@@ -33,6 +33,18 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+      - name: Install Terminus
+        run: |
+          echo "💻 Installing Terminus from phar on Linux..."
+          curl -L "https://github.com/pantheon-systems/terminus/releases/latest/download/terminus.phar" -o terminus
+          chmod +x terminus
+          sudo mv terminus /usr/local/bin/
+          # Test that terminus works...
+          terminus --version          
       - name: Install SSH key
         uses: webfactory/ssh-agent@d4b9b8ff72958532804b70bbe600ad43b36d5f2e
         with:
@@ -43,6 +55,9 @@ jobs:
       - name: Install plugin
         run: |
           terminus self:plugin:install ${GITHUB_WORKSPACE}
+          if [[ "${{ matrix.php }}" == "7.4" ]]; then
+            composer update
+          fi
           composer install
       - name: Functional Tests
         run: composer functional
