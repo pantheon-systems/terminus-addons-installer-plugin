@@ -63,6 +63,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Install Dependencies
-        run: composer install
+        run: |
+          if [[ "${{ matrix.php }}" == "7.4" ]]; then
+            composer update
+          fi
+          composer install
       - name: Code Style
         run: composer lint
