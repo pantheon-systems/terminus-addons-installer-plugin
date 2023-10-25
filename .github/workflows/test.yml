@@ -8,15 +8,23 @@ env:
 jobs:
   unit:
     runs-on: ubuntu-latest
-    container:
-      image: quay.io/pantheon-public/terminus-plugin-test:4.x-php8.0
-      options: --user root
+    strategy:
+      matrix:
+        php: [7.4, 8.3]
     name: Unit Tests
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
       - name: Install Dependencies
-        run: composer install
+        run: |
+          if [[ "${{ matrix.php }}" == "7.4" ]]; then
+            composer update
+          fi
+          composer install
       - name: Unit Tests
         run: composer test
   terminus-3:
