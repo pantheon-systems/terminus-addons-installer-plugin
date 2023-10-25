@@ -3,7 +3,6 @@ set -e
 
 echo "Running PHP $PHP_VERSION tests..."
 
-TERMINUS_PLUGINS_DIR=.. terminus list -n remote
 PHP_VER="$PHP_VERSION"
 PHP_VERSION=$(echo "$PHP_VERSION" | tr -d '.')
 FS_TEST="fs-${BUILD_NUM}-${PHP_VERSION}"
