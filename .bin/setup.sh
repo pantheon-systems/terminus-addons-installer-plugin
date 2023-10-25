@@ -47,7 +47,4 @@ echo "When PHP 8.3 is available on the platform, we will update the pantheon.yml
 
 terminus wp "$TERMINUS_SITE"."$FS_TEST" -- plugin install hello-dolly
 
-export FS_TEST
-export CI_TEST
-
 echo "✅ Done setting up $PHP_VER environments!"
