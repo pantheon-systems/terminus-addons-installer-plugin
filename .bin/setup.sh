@@ -15,11 +15,13 @@ terminus self:update
 echo "Logging in with a machine token:"
 terminus auth:login -n --machine-token="$TERMINUS_TOKEN"
 terminus whoami
+echo "Creating multidev environments for testing."
 terminus multidev:create "$TERMINUS_SITE".dev "$CI_TEST"
 terminus connection:set "$TERMINUS_SITE"."$CI_TEST" git
 # Set up the environment for filesystem tests.
 terminus multidev:create "$TERMINUS_SITE".dev "$FS_TEST"
 terminus connection:set "$TERMINUS_SITE"."$FS_TEST" sftp
+echo "✅ Created $CI_TEST and $FS_TEST."
 
 # Check if ~/.ssh directory exists
 if [ ! -d ~/.ssh ]; then
@@ -40,7 +42,10 @@ echo "Editing the ~/.ssh/config file"
 	echo "  LogLevel ERROR"
 	echo "  UserKnownHostsFile /dev/null"
 } >> ~/.ssh/config
+echo "✅ Done!"
 
 echo "When PHP 8.3 is available on the platform, we will update the pantheon.yml to set the multidev environment to $PHP_VER to validate that the command runs on the platform with the approprate PHP version. For now, we're only running the command on whatever PHP version the fixture site is running."
 
 terminus wp "$TERMINUS_SITE"."$FS_TEST" -- plugin install hello-dolly
+
+echo "✅ Done setting up environments!"

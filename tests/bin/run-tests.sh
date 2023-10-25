@@ -7,4 +7,5 @@ fi
 
 . "$source_path"
 
+echo "Running bats tests..."
 TERMINUS_PLUGINS_DIR=.. PATH=tools/bin:$PATH bats -p -t tests/functional
