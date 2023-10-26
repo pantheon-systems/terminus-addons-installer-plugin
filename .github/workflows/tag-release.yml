@@ -7,6 +7,8 @@ jobs:
   tag-release:
     runs-on: ubuntu-latest
     name: Tag & Release
+    permissions:
+      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v3
