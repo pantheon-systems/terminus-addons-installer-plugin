@@ -1,26 +1,26 @@
 #!/bin/bash
 set -e
 
-TERMINUS_PLUGINS_DIR=.. terminus list -n remote
+echo "Running PHP $PHP_VERSION tests..."
+
+PHP_VER="$PHP_VERSION"
+PHP_VERSION=$(echo "$PHP_VERSION" | tr -d '.')
+FS_TEST="fs-${BUILD_NUM}-${PHP_VERSION}"
+CI_TEST="ci-${BUILD_NUM}-${PHP_VERSION}"
 
 # Update Terminus to the latest version.
 terminus self:update
 
-# Set the fs-test number. If the build number is > 999, we need to trim the -test- out of the middle.
-if [ "$BUILD_NUM" -gt 999 ]; then
-	FS_TEST="fs-${BUILD_NUM}"
-else
-	FS_TEST="fs-test-${BUILD_NUM}"
-fi
-
 echo "Logging in with a machine token:"
 terminus auth:login -n --machine-token="$TERMINUS_TOKEN"
 terminus whoami
-terminus multidev:create "$TERMINUS_SITE".dev ci-"$BUILD_NUM"
-terminus connection:set "$TERMINUS_SITE".ci-"$BUILD_NUM" git
+echo "Creating multidev environments for testing."
+terminus multidev:create "$TERMINUS_SITE".dev "$CI_TEST"
+terminus connection:set "$TERMINUS_SITE"."$CI_TEST" git
 # Set up the environment for filesystem tests.
 terminus multidev:create "$TERMINUS_SITE".dev "$FS_TEST"
 terminus connection:set "$TERMINUS_SITE"."$FS_TEST" sftp
+echo "✅ Created $CI_TEST and $FS_TEST."
 
 # Check if ~/.ssh directory exists
 if [ ! -d ~/.ssh ]; then
@@ -34,12 +34,17 @@ if [ ! -f ~/.ssh/config ]; then
 	chmod 600 ~/.ssh/config
 fi
 
+echo "Editing the ~/.ssh/config file"
 {
-	echo "Editing the ~/.ssh/config file"
 	echo "Host *"
 	echo "  StrictHostKeyChecking no"
 	echo "  LogLevel ERROR"
 	echo "  UserKnownHostsFile /dev/null"
 } >> ~/.ssh/config
+echo "✅ Done!"
+
+echo "When PHP 8.3 is available on the platform, we will update the pantheon.yml to set the multidev environment to $PHP_VER to validate that the command runs on the platform with the approprate PHP version. For now, we're only running the command on whatever PHP version the fixture site is running."
 
 terminus wp "$TERMINUS_SITE"."$FS_TEST" -- plugin install hello-dolly
+
+echo "✅ Done setting up $PHP_VER environments!"

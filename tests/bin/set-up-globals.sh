@@ -3,6 +3,7 @@ set -e
 
 # Trim the newline character from BUILD_NUM variable
 BUILD_NUM=$(echo "${BUILD_NUM}" | tr -d '\n')
+PHP_VERSION=$(echo "${PHP_VERSION}" | tr -d '.')
 
 create_multidev() {
   local site="$1"
@@ -71,9 +72,14 @@ if [ -z "$TERMINUS_SITE" ]; then
   switch_to_sftp_mode "$FS_TEST_ENV"
   install_hello_dolly "$FS_TEST_ENV"
 else
-  # Always use the multidev if in CI.
-  SITE_ENV="${TERMINUS_SITE}.ci-${BUILD_NUM}"
-  FS_TEST_ENV="${TERMINUS_SITE}.fs-test-${BUILD_NUM}"
+  if [ -n "$PHP_VERSION" ]; then
+    FS_TEST_ENV="${TERMINUS_SITE}.fs-${BUILD_NUM}-${PHP_VERSION}"
+    SITE_ENV="${TERMINUS_SITE}.ci-${BUILD_NUM}-${PHP_VERSION}"
+  else
+    FS_TEST_ENV="${TERMINUS_SITE}.fs-test-${BUILD_NUM}"
+    SITE_ENV="${TERMINUS_SITE}.ci-${BUILD_NUM}"
+  fi
+
   echo "SITE_ENV is $SITE_ENV"
   echo "FS_TEST_ENV is $FS_TEST_ENV"
 fi
