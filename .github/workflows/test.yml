@@ -2,9 +2,6 @@ name: Test
 on:
   push:
 
-env:
-  TERMINUS_TOKEN: ${{ secrets.TERMINUS_TOKEN }}
-
 jobs:
   unit:
     runs-on: ubuntu-latest
@@ -21,33 +18,75 @@ jobs:
           composer install
       - name: Unit Tests
         run: composer test
-  terminus-3:
+
+  terminus-4:
     needs: unit
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php: [7.4, 8.3]
-    name: Terminus 3 Functional Tests
+        php: [8.3]
+    name: Terminus 4 Functional Tests
     env:
       TERMINUS_SITE: terminus-addons-installer-plugin
-      TERMINUS_TOKEN: ${{ secrets.TERMINUS_TOKEN }}
       BUILD_NUM: ${{ github.run_number }}
       PHP_VERSION: ${{ matrix.php }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
       - name: Install Terminus
+        uses: pantheon-systems/terminus-github-actions@v1
+        with:
+          pantheon-machine-token: ${{ secrets.TERMINUS_TOKEN }}
+      - name: Install SSH key
+        uses: webfactory/ssh-agent@d4b9b8ff72958532804b70bbe600ad43b36d5f2e
+        with:
+          ssh-private-key: ${{ secrets.SSH_KEY }}
+          log-public-key: false
+      - name: Set up environment
+        run: ./.bin/setup.sh
+      - name: Install plugin
         run: |
-          echo "💻 Installing Terminus from phar on Linux..."
-          curl -L "https://github.com/pantheon-systems/terminus/releases/latest/download/terminus.phar" -o terminus
-          chmod +x terminus
-          sudo mv terminus /usr/local/bin/
-          # Test that terminus works...
-          terminus --version          
+          terminus self:plugin:install ${GITHUB_WORKSPACE}
+          if [[ "${{ matrix.php }}" == "7.4" ]]; then
+            composer update
+          fi
+          composer install
+      - name: Install BATS
+        uses: mig4/setup-bats@v1
+      - name: Functional Tests
+        run: composer functional
+      - name: Cleanup
+        if: always()
+        run: ./.bin/cleanup.sh
+    
+    
+  terminus-3:
+    needs: unit
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php: [7.4]
+    name: Terminus 3 Functional Tests
+    env:
+      TERMINUS_SITE: terminus-addons-installer-plugin
+      BUILD_NUM: ${{ github.run_number }}
+      PHP_VERSION: ${{ matrix.php }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+      - name: Install Terminus
+        uses: pantheon-systems/terminus-github-actions@v1
+        with:
+          pantheon-machine-token: ${{ secrets.TERMINUS_TOKEN }}
+          terminus-version: 3.6.2
       - name: Install SSH key
         uses: webfactory/ssh-agent@d4b9b8ff72958532804b70bbe600ad43b36d5f2e
         with:

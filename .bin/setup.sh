@@ -7,12 +7,9 @@ PHP_VERSION=$(echo "$PHP_VERSION" | tr -d '.')
 FS_TEST="fs-${BUILD_NUM}-${PHP_VERSION}"
 CI_TEST="ci-${BUILD_NUM}-${PHP_VERSION}"
 
-# Update Terminus to the latest version.
-terminus self:update
-
-echo "Logging in with a machine token:"
-terminus auth:login -n --machine-token="$TERMINUS_TOKEN"
+echo "Who am I?"
 terminus whoami
+
 echo "Creating multidev environments for testing."
 terminus multidev:create "$TERMINUS_SITE".dev "$CI_TEST"
 terminus connection:set "$TERMINUS_SITE"."$CI_TEST" git
