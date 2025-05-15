@@ -59,11 +59,6 @@ class ScaffoldExtensionCommand extends TerminusCommand implements SiteAwareInter
         $site_arr = Helpers\UtilityFunctions::decypherSiteInfo($site_info);
         $site_id = $site_arr['id'];
         $site_env = $site_arr['env'];
-        // Bail if getSiteById doesn't exist.
-        if (! method_exists($this, 'getSiteById')) {
-            $this->log()->error('This command requires Terminus 3.2.0 or later. You appear to be running an earlier version of Terminus. Please update Terminus and try again.');
-            return 1;
-        }
         $site = $this->getSiteById($site_id);
         $env = $site->getEnvironments()->get($site_env);
 
