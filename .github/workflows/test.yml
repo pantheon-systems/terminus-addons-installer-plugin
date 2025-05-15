@@ -25,7 +25,7 @@ jobs:
     strategy:
       matrix:
         php: [8.3]
-    name: Terminus 3 Functional Tests
+    name: Terminus 4 Functional Tests
     env:
       TERMINUS_SITE: terminus-addons-installer-plugin
       BUILD_NUM: ${{ github.run_number }}
