@@ -58,6 +58,11 @@ class ScaffoldExtensionCommand extends TerminusCommand implements SiteAwareInter
             return 1;
         }
 
+        if (empty($job_id)) {
+            $this->log()->error('Please provide a job ID.');
+            return 1;
+        }
+
         $with_db = true; // Todo: In the future, this will be the opposite of the --skip-db flag, if passed.
         $site_arr = Helpers\UtilityFunctions::decypherSiteInfo($site_info);
         $site_id = $site_arr['id'];
@@ -69,11 +74,6 @@ class ScaffoldExtensionCommand extends TerminusCommand implements SiteAwareInter
 
         if (in_array($site_env, ['test', 'live'])) {
             $this->log()->error(sprintf('You cannot run the %1$s workflow in a %2$s environment. You must use dev or a multidev environment.', $job_id, $site_env));
-            return 1;
-        }
-
-        if (empty($job_id)) {
-            $this->log()->error('Please provide a job ID.');
             return 1;
         }
 

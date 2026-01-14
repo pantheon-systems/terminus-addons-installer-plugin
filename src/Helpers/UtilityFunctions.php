@@ -63,7 +63,7 @@ class UtilityFunctions
         $output .= "\tterminus addons-install:list <site_id>.<env>\n\n";
         $output .= $bold . "terminus addons-install:run (aliases: install:run)\n" . self::DEFAULT_COLOR;
         $output .= self::UPDATE_VARS_COLOR . "Description:\n" . self::DEFAULT_COLOR;
-        $output .= "\tRuns the specified job.\n";
+        $output .= "\tRun the specified job.\n";
         $output .= self::UPDATE_VARS_COLOR . "Usage:\n" . self::DEFAULT_COLOR;
         $output .= "\tterminus addons-install:run <site_id>.<env> <job> [--with-db]\n";
         $output .= self::UPDATE_VARS_COLOR . "Examples:\n" . self::DEFAULT_COLOR;
