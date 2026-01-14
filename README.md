@@ -39,6 +39,27 @@ Runs the specified job.
 * `terminus addons-install:list`
 * `terminus addons-install:run <site_id>.<env> <job> [--skip-db]`
 
+### Available Jobs
+
+#### Object Cache Pro Installation
+```bash
+terminus addons-install:run mysite.dev ocp
+```
+
+#### Update PHP Version
+```bash
+terminus addons-install:run mysite.dev update-php --php-version=8.3
+```
+
+**Supported PHP versions:** 8.4, 8.3, 8.2, 8.1, 8.0, 7.4, 7.3, 7.2
+
+#### Update Solr Version
+```bash
+terminus addons-install:run mysite.dev update-solr --solr-version=8
+```
+
+**Supported Solr versions:** 8, 3
+
 ## Installation
 
 To install this plugin using Terminus 3:

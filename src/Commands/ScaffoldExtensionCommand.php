@@ -46,8 +46,11 @@ class ScaffoldExtensionCommand extends TerminusCommand implements SiteAwareInter
      *
      * @param string $site_info
      * @param string $job_id
+     * @option version Target version (e.g., 8.3 for update-php, 8 for update-solr)
+     * @option php-version Target PHP version (e.g., 8.3) for update-php job (deprecated, use --version)
+     * @option solr-version Target Solr version (e.g., 8) for update-solr job (deprecated, use --version)
      */
-    public function runScaffoldExtensionsJob(string $site_info = '', string $job_id = '')
+    public function runScaffoldExtensionsJob(string $site_info = '', string $job_id = '', array $options = ['version' => null, 'php-version' => null, 'solr-version' => null])
     {
         if (empty($site_info)) {
             $this->log()->error('Please provide site information.');
@@ -90,10 +93,31 @@ class ScaffoldExtensionCommand extends TerminusCommand implements SiteAwareInter
             }
         }
 
+        // Build params array
         $params = [
             'job_name' => $job_name,
             'with_db' => $with_db, // Todo: This will be a flag in a later iteration.
         ];
+
+        // Add version parameters for update jobs
+        if (in_array($job_name, ['update_php_version', 'update_solr_version'])) {
+            // Validate required options for each job type
+            if ($job_name === 'update_php_version') {
+                $version = $options['version'] ?? $options['php-version'] ?? null;
+                if (empty($version)) {
+                    $this->log()->error('For update-php job, you must provide --version');
+                    return 1;
+                }
+                $params['target_php_version'] = $version;
+            } elseif ($job_name === 'update_solr_version') {
+                $version = $options['version'] ?? $options['solr-version'] ?? null;
+                if (empty($version)) {
+                    $this->log()->error('For update-solr job, you must provide --version');
+                    return 1;
+                }
+                $params['target_solr_version'] = $version;
+            }
+        }
 
         $this->log()->notice(sprintf('Attempting to run the %1$s job on %2$s.%3$s...', $job_id, $site_id, $site_env));
 
