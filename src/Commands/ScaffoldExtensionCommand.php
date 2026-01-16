@@ -94,8 +94,14 @@ class ScaffoldExtensionCommand extends TerminusCommand implements SiteAwareInter
         }
 
         // Build params array
+        // Map update_php_version and update_solr_version to the unified update_pantheon_yml job
+        $backend_job_name = $job_name;
+        if (in_array($job_name, ['update_php_version', 'update_solr_version'])) {
+            $backend_job_name = 'update_pantheon_yml';
+        }
+
         $params = [
-            'job_name' => $job_name,
+            'job_name' => $backend_job_name,
             'with_db' => $with_db, // Todo: This will be a flag in a later iteration.
         ];
 
