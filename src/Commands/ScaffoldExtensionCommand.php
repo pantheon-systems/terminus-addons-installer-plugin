@@ -46,10 +46,11 @@ class ScaffoldExtensionCommand extends TerminusCommand implements SiteAwareInter
      *
      * @param string $site_info
      * @param string $job_id
+     * @param string $version Target version (e.g., 8.3 for PHP, 8 for Solr)
      * @option php-version Target PHP version (e.g., 8.3) for update-php job
      * @option solr-version Target Solr version (e.g., 8) for update-solr job
      */
-    public function runScaffoldExtensionsJob(string $site_info = '', string $job_id = '', array $options = ['php-version' => null, 'solr-version' => null])
+    public function runScaffoldExtensionsJob(string $site_info = '', string $job_id = '', string $version = '', array $options = ['php-version' => null, 'solr-version' => null])
     {
         if (empty($site_info)) {
             $this->log()->error('Please provide site information.');
@@ -108,19 +109,21 @@ class ScaffoldExtensionCommand extends TerminusCommand implements SiteAwareInter
         if (in_array($job_name, ['update_php_version', 'update_solr_version'])) {
             // Validate required options for each job type
             if ($job_name === 'update_php_version') {
-                $version = $options['php-version'] ?? null;
-                if (empty($version)) {
-                    $this->log()->error('For update-php job, you must provide --php-version');
+                // Use positional version parameter first, fall back to --php-version flag
+                $target_version = !empty($version) ? $version : ($options['php-version'] ?? null);
+                if (empty($target_version)) {
+                    $this->log()->error('For php/update-php job, you must provide a version (e.g., terminus addons-install:run mysite.dev php 8.3)');
                     return 1;
                 }
-                $params['target_php_version'] = $version;
+                $params['target_php_version'] = $target_version;
             } elseif ($job_name === 'update_solr_version') {
-                $version = $options['solr-version'] ?? null;
-                if (empty($version)) {
-                    $this->log()->error('For update-solr job, you must provide --solr-version');
+                // Use positional version parameter first, fall back to --solr-version flag
+                $target_version = !empty($version) ? $version : ($options['solr-version'] ?? null);
+                if (empty($target_version)) {
+                    $this->log()->error('For solr/update-solr job, you must provide a version (e.g., terminus addons-install:run mysite.dev solr 8)');
                     return 1;
                 }
-                $params['target_solr_version'] = $version;
+                $params['target_solr_version'] = $target_version;
             }
         }
 
@@ -159,10 +162,14 @@ class ScaffoldExtensionCommand extends TerminusCommand implements SiteAwareInter
     public function validateJobName(string $job_id) : string
     {
         $jobs = Helpers\UtilityFunctions::availableJobs();
-        // Check if availableJobs contains the $job_id as an 'id' within the array.
+        // Check if availableJobs contains the $job_id as an 'id' or 'aliases' within the array.
         // If it does, return the index.
         foreach ($jobs as $index => $job) {
             if ($job['id'] === $job_id) {
+                return $index;
+            }
+            // Check aliases if they exist
+            if (isset($job['aliases']) && in_array($job_id, $job['aliases'])) {
                 return $index;
             }
         }
