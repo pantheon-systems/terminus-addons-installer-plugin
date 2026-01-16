@@ -48,12 +48,12 @@ terminus addons-install:run mysite.dev ocp
 
 #### Update PHP Version
 ```bash
-terminus addons-install:run mysite.dev update-php --version=8.3
+terminus addons-install:run mysite.dev update-php --php-version=8.3
 ```
 
 #### Update Solr Version
 ```bash
-terminus addons-install:run mysite.dev update-solr --version=8
+terminus addons-install:run mysite.dev update-solr --solr-version=8
 ```
 
 **Supported Solr versions:** 8, 3

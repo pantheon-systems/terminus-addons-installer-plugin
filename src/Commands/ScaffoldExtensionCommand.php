@@ -46,11 +46,10 @@ class ScaffoldExtensionCommand extends TerminusCommand implements SiteAwareInter
      *
      * @param string $site_info
      * @param string $job_id
-     * @option version Target version (e.g., 8.3 for update-php, 8 for update-solr)
-     * @option php-version Target PHP version (e.g., 8.3) for update-php job (deprecated, use --version)
-     * @option solr-version Target Solr version (e.g., 8) for update-solr job (deprecated, use --version)
+     * @option php-version Target PHP version (e.g., 8.3) for update-php job
+     * @option solr-version Target Solr version (e.g., 8) for update-solr job
      */
-    public function runScaffoldExtensionsJob(string $site_info = '', string $job_id = '', array $options = ['version' => null, 'php-version' => null, 'solr-version' => null])
+    public function runScaffoldExtensionsJob(string $site_info = '', string $job_id = '', array $options = ['php-version' => null, 'solr-version' => null])
     {
         if (empty($site_info)) {
             $this->log()->error('Please provide site information.');
@@ -109,16 +108,16 @@ class ScaffoldExtensionCommand extends TerminusCommand implements SiteAwareInter
         if (in_array($job_name, ['update_php_version', 'update_solr_version'])) {
             // Validate required options for each job type
             if ($job_name === 'update_php_version') {
-                $version = $options['version'] ?? $options['php-version'] ?? null;
+                $version = $options['php-version'] ?? null;
                 if (empty($version)) {
-                    $this->log()->error('For update-php job, you must provide --version');
+                    $this->log()->error('For update-php job, you must provide --php-version');
                     return 1;
                 }
                 $params['target_php_version'] = $version;
             } elseif ($job_name === 'update_solr_version') {
-                $version = $options['version'] ?? $options['solr-version'] ?? null;
+                $version = $options['solr-version'] ?? null;
                 if (empty($version)) {
-                    $this->log()->error('For update-solr job, you must provide --version');
+                    $this->log()->error('For update-solr job, you must provide --solr-version');
                     return 1;
                 }
                 $params['target_solr_version'] = $version;
