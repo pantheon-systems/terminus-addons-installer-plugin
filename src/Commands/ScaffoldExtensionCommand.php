@@ -46,12 +46,20 @@ class ScaffoldExtensionCommand extends TerminusCommand implements SiteAwareInter
      *
      * @param string $site_info
      * @param string $job_id
+     * @param string $version Target version (e.g., 8.3 for PHP, 8 for Solr)
+     * @option php-version Target PHP version (e.g., 8.3) for update-php job
+     * @option solr-version Target Solr version (e.g., 8) for update-solr job
      */
-    public function runScaffoldExtensionsJob(string $site_info = '', string $job_id = '')
+    public function runScaffoldExtensionsJob(string $site_info = '', string $job_id = '', string $version = '', array $options = ['php-version' => null, 'solr-version' => null])
     {
         if (empty($site_info)) {
             $this->log()->error('Please provide site information.');
             Helpers\UtilityFunctions::usage();
+            return 1;
+        }
+
+        if (empty($job_id)) {
+            $this->log()->error('Please provide a job ID.');
             return 1;
         }
 
@@ -66,11 +74,6 @@ class ScaffoldExtensionCommand extends TerminusCommand implements SiteAwareInter
 
         if (in_array($site_env, ['test', 'live'])) {
             $this->log()->error(sprintf('You cannot run the %1$s workflow in a %2$s environment. You must use dev or a multidev environment.', $job_id, $site_env));
-            return 1;
-        }
-
-        if (empty($job_id)) {
-            $this->log()->error('Please provide a job ID.');
             return 1;
         }
 
@@ -90,10 +93,39 @@ class ScaffoldExtensionCommand extends TerminusCommand implements SiteAwareInter
             }
         }
 
+        // Build params array
+        // Map update_php_version and update_solr_version to the unified update_pantheon_yml job
+        $backend_job_name = $job_name;
+        if (in_array($job_name, ['update_php_version', 'update_solr_version'])) {
+            $backend_job_name = 'update_pantheon_yml';
+        }
+
         $params = [
-            'job_name' => $job_name,
+            'job_name' => $backend_job_name,
             'with_db' => $with_db, // Todo: This will be a flag in a later iteration.
         ];
+
+        // Add version parameters for update jobs
+        if (in_array($job_name, ['update_php_version', 'update_solr_version'])) {
+            // Validate required options for each job type
+            if ($job_name === 'update_php_version') {
+                // Use positional version parameter first, fall back to --php-version flag
+                $target_version = !empty($version) ? $version : ($options['php-version'] ?? null);
+                if (empty($target_version)) {
+                    $this->log()->error('For php/update-php job, you must provide a version (e.g., terminus addons-install:run mysite.dev php 8.3)');
+                    return 1;
+                }
+                $params['target_php_version'] = $target_version;
+            } elseif ($job_name === 'update_solr_version') {
+                // Use positional version parameter first, fall back to --solr-version flag
+                $target_version = !empty($version) ? $version : ($options['solr-version'] ?? null);
+                if (empty($target_version)) {
+                    $this->log()->error('For solr/update-solr job, you must provide a version (e.g., terminus addons-install:run mysite.dev solr 8)');
+                    return 1;
+                }
+                $params['target_solr_version'] = $target_version;
+            }
+        }
 
         $this->log()->notice(sprintf('Attempting to run the %1$s job on %2$s.%3$s...', $job_id, $site_id, $site_env));
 
@@ -130,10 +162,14 @@ class ScaffoldExtensionCommand extends TerminusCommand implements SiteAwareInter
     public function validateJobName(string $job_id) : string
     {
         $jobs = Helpers\UtilityFunctions::availableJobs();
-        // Check if availableJobs contains the $job_id as an 'id' within the array.
+        // Check if availableJobs contains the $job_id as an 'id' or 'aliases' within the array.
         // If it does, return the index.
         foreach ($jobs as $index => $job) {
             if ($job['id'] === $job_id) {
+                return $index;
+            }
+            // Check aliases if they exist
+            if (isset($job['aliases']) && in_array($job_id, $job['aliases'])) {
                 return $index;
             }
         }
