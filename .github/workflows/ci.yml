@@ -11,12 +11,12 @@ jobs:
         php-version: [7.4, 8.3]
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@a37ce9120846195fa4ece8f58b268e6043cb2f26 # v3.7.0
       - name: Setup PHP
-        uses: shivammathur/setup-php@v2
+        uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # v2
         with:
           php-version: ${{ matrix.php-version }}
       - name: PHPCompatibility
-        uses: pantheon-systems/phpcompatibility-action@v1
+        uses: pantheon-systems/phpcompatibility-action@6bcfb79e78f644a471e856a1e92e14148a8e4017 # v1.1.4
         with:
           test-versions: ${{ matrix.php-version }}-
