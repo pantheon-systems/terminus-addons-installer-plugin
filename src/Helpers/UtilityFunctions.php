@@ -63,9 +63,13 @@ class UtilityFunctions
         $output .= "\tterminus addons-install:list <site_id>.<env>\n\n";
         $output .= $bold . "terminus addons-install:run (aliases: install:run)\n" . self::DEFAULT_COLOR;
         $output .= self::UPDATE_VARS_COLOR . "Description:\n" . self::DEFAULT_COLOR;
-        $output .= "\tRuns the specified job.\n";
+        $output .= "\tRun the specified job.\n";
         $output .= self::UPDATE_VARS_COLOR . "Usage:\n" . self::DEFAULT_COLOR;
-        $output .= "\tterminus addons-install:run <site_id>.<env> <job> [--with-db]\n\n";
+        $output .= "\tterminus addons-install:run <site_id>.<env> <job> [version]\n";
+        $output .= self::UPDATE_VARS_COLOR . "Examples:\n" . self::DEFAULT_COLOR;
+        $output .= "\tterminus addons-install:run mysite.dev php 8.3\n";
+        $output .= "\tterminus addons-install:run mysite.dev solr 8\n";
+        $output .= "\tterminus addons-install:run mysite.dev ocp\n\n";
         $output .= "For more information, run terminus help addons-install:<command>.";
 
         return $output;
@@ -82,6 +86,16 @@ class UtilityFunctions
             'install_ocp' => [
                 'id' => 'ocp',
                 'description' => 'Installs Object Cache Pro',
+            ],
+            'update_php_version' => [
+                'id' => 'php',
+                'aliases' => ['update-php'],
+                'description' => 'Updates PHP version in pantheon.yml',
+            ],
+            'update_solr_version' => [
+                'id' => 'solr',
+                'aliases' => ['update-solr'],
+                'description' => 'Updates Solr version in pantheon.yml',
             ],
         ];
     }
