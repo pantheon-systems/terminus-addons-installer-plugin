@@ -98,6 +98,11 @@ jobs:
       - name: Set up environment
         run: ./.bin/setup.sh
       - name: Install plugin
+        env:
+          # Terminus 3.6.2 pins exact dependency versions that now have security
+          # advisories; Composer 2.9+ refuses to resolve them by default, which
+          # breaks self:plugin:install. Scoped to this CI-only Terminus 3 job.
+          COMPOSER_NO_SECURITY_BLOCKING: 1
         run: |
           terminus self:plugin:install ${GITHUB_WORKSPACE}
           if [[ "${{ matrix.php }}" == "7.4" ]]; then
